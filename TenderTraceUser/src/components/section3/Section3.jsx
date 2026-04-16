@@ -1,11 +1,129 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ComplaintModal from '../ComplaintModal'
 
-const Section2 = () => {
+const Section3 = () => {
+  const navigate = useNavigate();
+  const [tenders, setTenders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Complaint modal state
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [activeTender, setActiveTender] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/tenders/all')
+      .then(res => res.json())
+      .then(data => {
+        setTenders(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch public tenders:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const getStatusColor = (status) => {
+    switch(status) {
+      case 'In Progress': return 'text-yellow-700 bg-yellow-100 border-yellow-200';
+      case 'Completed': return 'text-green-700 bg-green-100 border-green-200';
+      case 'Under Review': return 'text-blue-700 bg-blue-100 border-blue-200';
+      case 'Pending': return 'text-orange-700 bg-orange-100 border-orange-200';
+      default: return 'text-gray-700 bg-gray-100 border-gray-200';
+    }
+  }
+
   return (
-    <div id="live-projects" className='h-screen w-full px-18'>
+    <div id="tenders-section" className='min-h-screen w-full px-8 md:px-18 pt-8 pb-20 bg-gray-50 scroll-mt-24'>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16 animate-fade-in-down">
+          <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Active Tenders & Live Projects</h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Browse the latest government contracts and ongoing infrastructure developments.</p>
+        </div>
+
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        ) : (
+          <div className="h-[650px] overflow-y-auto pr-2 sm:pr-4" style={{ scrollbarWidth: 'thin', scrollbarColor: '#CBD5E1 transparent' }}>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-6">
+              {tenders.map((tender) => (
+              <div key={tender._id || tender.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group">
+                <div className="p-6 flex-grow">
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full border border-gray-200">{tender.id}</span>
+                    <span className={`text-xs font-bold px-3 py-1 rounded-full border ${getStatusColor(tender.status)}`}>
+                      {tender.status}
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-700 transition-colors">{tender.tenderName}</h3>
+                  <p className="text-sm font-semibold text-blue-600 mb-6 flex items-center">
+                    <i className="ri-building-4-line mr-2 text-lg"></i> {tender.companyName}
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-5 rounded-xl border border-gray-100">
+                    <div>
+                      <p className="text-gray-400 text-xs uppercase mb-1 font-bold tracking-wider">Budget</p>
+                      <p className="font-bold text-gray-900 text-base">{tender.budget}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-400 text-xs uppercase mb-1 font-bold tracking-wider">Location</p>
+                      <p className="font-bold text-gray-900 text-base">{tender.locationInfo}</p>
+                    </div>
+                    <div className="col-span-2 pt-4 border-t border-gray-200 mt-2">
+                      <p className="text-gray-400 text-xs uppercase mb-1 font-bold tracking-wider flex items-center">
+                        <i className="ri-calendar-event-line mr-1 text-gray-500 text-base"></i> Added On
+                      </p>
+                      <p className="font-semibold text-gray-800">{tender.date}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
+                  <button 
+                    onClick={() => {
+                      setActiveTender(tender);
+                      setIsReportModalOpen(true);
+                    }}
+                    className="flex-1 mr-2 text-center text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 transition-colors py-2 rounded-lg flex items-center justify-center border border-red-100"
+                  >
+                    <i className="ri-error-warning-line mr-1.5"></i> Report
+                  </button>
+                  <button 
+                    onClick={() => navigate(`/projects/${tender.id || tender._id}`)}
+                    className="flex-[2] text-center text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors py-2 rounded-lg flex items-center justify-center shadow-sm"
+                  >
+                    View Details <i className="ri-arrow-right-line ml-1.5"></i>
+                  </button>
+                </div>
+              </div>
+            ))}
             
+            {tenders.length === 0 && (
+              <div className="col-span-full py-20 text-center bg-white rounded-3xl border border-gray-100">
+                <div className="bg-gray-50 h-24 w-24 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <i className="ri-folders-line text-4xl text-gray-400"></i>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">No active tenders currently available</h3>
+                <p className="text-gray-500 max-w-md mx-auto">Check back later or contact the administrative portal for upcoming projects.</p>
+              </div>
+            )}
+          </div>
+          </div>
+        )}
+      </div>
+
+      <ComplaintModal 
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+        tenderTitle={activeTender?.tenderName}
+        tenderId={activeTender?.id}
+      />
     </div>
   )
 }
 
-export default Section2
+export default Section3

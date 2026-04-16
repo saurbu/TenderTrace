@@ -1,5 +1,45 @@
 @import "tailwindcss";
 
-#right::-webkit-scrollbar{
+#right::-webkit-scrollbar {
     display: none;
+}
+
+/* Infinite Marquee Animation */
+.marquee-container {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-content {
+    animation: marquee 40s linear infinite;
+}
+
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Custom Scrollbar for Project Details */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
