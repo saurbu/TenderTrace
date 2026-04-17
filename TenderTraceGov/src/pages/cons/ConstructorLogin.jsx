@@ -1,40 +1,15 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
+// import { useNavigate } from 'react-router-dom'
 
 const ConstructorLogin = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = React.useState('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    try {
-      const res = await fetch("http://localhost:5000/api/tender/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      })
-
-      const data = await res.json()
-
-      if (res.ok) {
-  alert("Login Successful ✅")
-
-  localStorage.setItem("email", data.email) // ✅ correct email from backend
-
-  navigate('/constructor-dashboard')
-} else {
-  alert(data.message || "Login failed ❌")
-}
-
-    } catch (error) {
-      console.error(error)
-      alert("Server error ❌")
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault() // stop reload
+    localStorage.setItem('contractorEmail', email)
+    window.location.href = '/constructor-dashboard'
   }
 
   return (
@@ -47,9 +22,9 @@ const ConstructorLogin = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="email"
-            placeholder="Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter Assigned Email ID"
             className="w-full border px-4 py-2 mb-4 rounded-lg"
             required
           />
@@ -57,15 +32,13 @@ const ConstructorLogin = () => {
           <input
             type="password"
             placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             className="w-full border px-4 py-2 mb-4 rounded-lg"
             required
           />
 
           <button 
             type="submit"
-            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800"
+            className="w-full bg-black text-white py-2 rounded-lg"
           >
             Login
           </button>
