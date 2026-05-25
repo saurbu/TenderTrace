@@ -42,7 +42,7 @@ const Home = () => {
     <>
       <Section1  />
       <Section2 users={users} />
-      {/* <Section3 /> */}
+      <Section3 /> 
     </>
   )
 }

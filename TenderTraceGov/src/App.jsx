@@ -11,6 +11,8 @@ import ConstructorLogin from './pages/cons/ConstructorLogin'
 
 import GovDashboard from './pages/govt/GovDashboard'
 import ConstructorDashboard from './pages/cons/ConstructorDashboard'
+import ConstructorProjectSpace from "./pages/cons/ConstructorProjectSpace";
+
 
 const App = () => {
   return (
@@ -57,7 +59,11 @@ const App = () => {
             <Footer />
           </>
         } />
+        <Route
+          path="/constructor-project/:id"
+          element={<ConstructorProjectSpace />
 
+          } />
       </Routes>
 
     </BrowserRouter>
