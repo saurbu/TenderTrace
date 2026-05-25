@@ -1,123 +1,60 @@
 import Tender from "../models/Tender.js";
 import bcrypt from "bcrypt";
-import {
-  generateTenderId,
-  generatePassword
-} from "../utils/generateCredentials.js";
+import { generateTenderId, generatePassword } from "../utils/generateCredentials.js";
 
-/* -----------------------------------
-   GENERATE TENDER ID
------------------------------------ */
+// ✅ Generate Tender ID
 export const getTenderId = async (req, res) => {
-
   try {
-
     const tenderId = await generateTenderId();
-
-    res.status(200).json({
-      success: true,
-      tenderId
-    });
-
-  } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-
+    res.json({ tenderId });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-
 };
 
-/* -----------------------------------
-   GET ALL TENDERS
------------------------------------ */
+// ✅ GET ALL / FILTERED TENDERS
 export const getAllTenders = async (req, res) => {
-
   try {
-
     const { email } = req.query;
 
-    let query = {};
+    let tenders;
 
     if (email) {
-      query.email = email.trim().toLowerCase();
+      tenders = await Tender.find({ email }).sort({ createdAt: -1 });
+    } else {
+      tenders = await Tender.find().sort({ createdAt: -1 });
     }
 
-    const tenders = await Tender
-      .find(query)
-      .sort({ createdAt: -1 });
-
-    const formatted = tenders.map((t) => {
-
+    const formatted = tenders.map(t => {
       const startDate = new Date(t.createdAt);
 
       const endDate = new Date(startDate);
-
-      endDate.setMonth(
-        endDate.getMonth() + Number(t.timePeriod || 0)
-      );
+      endDate.setMonth(endDate.getMonth() + (t.timePeriod || 0));
 
       return {
-
-        _id: t._id,
-
         id: t.id,
-
         tenderName: t.tenderName,
-
         companyName: t.companyName,
-
-        email: t.email,
-
-        location: t.location,
-
-        status: t.status || "Pending",
-
-        pin: t.pin,
-
-        budget: `₹ ${(Number(t.budget) / 10000000).toFixed(2)} Cr`,
-
+        date: startDate.toLocaleDateString('en-GB'),
+        startDate: startDate.toLocaleDateString('en-GB'),
+        endDate: endDate.toLocaleDateString('en-GB'),
         timePeriod: t.timePeriod,
-
-        date: startDate.toLocaleDateString("en-GB"),
-
-        startDate: startDate.toLocaleDateString("en-GB"),
-
-        endDate: endDate.toLocaleDateString("en-GB")
-
+        status: t.status,
+        locationInfo: t.location,
+        budget: `₹ ${(t.budget / 10000000).toFixed(2)} Cr`
       };
-
     });
 
-    res.status(200).json({
-      success: true,
-      data: formatted
-    });
+    res.json(formatted);
 
-  } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-
 };
 
-/* -----------------------------------
-   CREATE TENDER
------------------------------------ */
+// ✅ CREATE TENDER (THIS WAS MISSING / BROKEN)
 export const createTender = async (req, res) => {
-
   try {
-
     const {
       id,
       tenderName,
@@ -128,230 +65,56 @@ export const createTender = async (req, res) => {
       location
     } = req.body;
 
-    /* VALIDATION */
-
-    if (
-      !id ||
-      !tenderName ||
-      !companyName ||
-      !email
-    ) {
-
-      return res.status(400).json({
-        success: false,
-        message: "All fields are required"
-      });
-
-    }
-
-    /* CHECK EXISTING */
-
-    const existingTender = await Tender.findOne({
-      id
-    });
-
-    if (existingTender) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Tender ID already exists"
-      });
-
-    }
-
-    /* GENERATE PASSWORD */
-
-    const rawPassword = generatePassword(
-      email,
-      id
-    );
-
-    /* HASH PASSWORD */
-
-    const hashedPassword = await bcrypt.hash(
-      String(rawPassword),
-      10
-    );
-
-    /* GENERATE PIN */
-
-    const pin = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
-
-    /* CREATE TENDER */
+    const rawPassword = generatePassword(email, id);
+    const hashedPassword = await bcrypt.hash(rawPassword, 10);
 
     const tender = new Tender({
-
       id,
-
       tenderName,
-
       companyName,
-
-      email: email.trim().toLowerCase(),
-
+      email,
       password: hashedPassword,
-
-      budget: Number(budget),
-
-      timePeriod: Number(timePeriod),
-
-      location,
-
-      pin,
-
-      status: "Pending"
-
+      budget,
+      timePeriod,
+      location
     });
 
     await tender.save();
 
-    res.status(201).json({
-
-      success: true,
-
-      message: "Tender Created Successfully",
-
+    res.json({
+      message: "Tender Created",
       tenderId: id,
-
-      password: rawPassword,
-
-      pin
-
+      password: rawPassword
     });
 
   } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-
+    res.status(500).json({ error: error.message });
   }
-
 };
 
-/* -----------------------------------
-   LOGIN
------------------------------------ */
+// ✅ LOGIN
 export const loginConstructor = async (req, res) => {
-
   try {
+    const { email, password } = req.body;
 
-    const {
-      email,
-      password
-    } = req.body;
-
-    if (!email || !password) {
-
-      return res.status(400).json({
-        success: false,
-        message: "Email and password required"
-      });
-
-    }
-
-    const user = await Tender.findOne({
-      email: email.trim().toLowerCase()
-    });
+    const user = await Tender.findOne({ email });
 
     if (!user) {
-
-      return res.status(404).json({
-        success: false,
-        message: "User not found"
-      });
-
+      return res.status(404).json({ message: "User not found" });
     }
 
-    const isMatch = await bcrypt.compare(
-      String(password),
-      String(user.password)
-    );
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-
-      return res.status(401).json({
-        success: false,
-        message: "Invalid password"
-      });
-
+      return res.status(401).json({ message: "Invalid password" });
     }
 
-    res.status(200).json({
-
-      success: true,
-
-      message: "Login Successful",
-
-      user: {
-
-        id: user.id,
-
-        email: user.email,
-
-        pin: user.pin
-
-      }
-
+    res.json({
+      message: "Login successful",
+      email: user.email
     });
 
   } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-
+    res.status(500).json({ error: error.message });
   }
-
-};
-
-/* -----------------------------------
-   UPDATE TENDER
------------------------------------ */
-export const updateTender = async (req, res) => {
-
-  try {
-
-    const { id } = req.params;
-
-    const updatedTender =
-      await Tender.findOneAndUpdate(
-        { id },
-        req.body,
-        { new: true }
-      );
-
-    if (!updatedTender) {
-
-      return res.status(404).json({
-        success: false,
-        message: "Tender not found"
-      });
-
-    }
-
-    res.status(200).json({
-      success: true,
-      data: updatedTender
-    });
-
-  } catch (error) {
-
-    console.log(error);
-
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-
-  }
-
 };
