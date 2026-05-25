@@ -54,7 +54,14 @@ const Navbar = () => {
           Live Projects
         </button>
 
-        <button className="bg-gray-200 rounded-full tracking-widest uppercase px-4 py-2 text-sm cursor-pointer">
+        <button 
+        onClick={() => {
+            const section = document.getElementById('tenders-section')
+            if (section) {
+              section.scrollIntoView({ behavior: 'smooth' })
+            }
+          }}
+        className="bg-gray-200 rounded-full tracking-widest uppercase px-4 py-2 text-sm cursor-pointer">
           Tenders
         </button>
 
