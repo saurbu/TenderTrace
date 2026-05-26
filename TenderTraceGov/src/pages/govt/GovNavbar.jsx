@@ -18,11 +18,13 @@ const GovNavbar = ({ onOpenModal, onOpenBillModal }) => {
   }, [])
 
   return (
-    <nav className="bg-white text-gray-900 border-b border-gray-200 shadow-sm sticky top-0 z-40">
+    <nav className="bg-white/90 backdrop-blur-md text-gray-900 border-b border-gray-100 shadow-sm sticky top-0 z-40 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => navigate('/')}>
-            <span className="text-2xl font-bold tracking-wider">TenderTrace <span className="text-blue-600 text-lg">| Gov</span></span>
+          <div className="flex-shrink-0 flex items-center cursor-pointer group" onClick={() => navigate('/')}>
+            <span className="text-2xl font-black tracking-tighter text-gray-900 group-hover:text-blue-700 transition-colors">
+              TenderTrace <span className="text-blue-600 font-medium text-lg ml-1">| Gov</span>
+            </span>
           </div>
           
           <div className="flex items-center space-x-4 sm:space-x-6">

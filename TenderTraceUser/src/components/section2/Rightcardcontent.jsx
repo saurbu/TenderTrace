@@ -5,13 +5,13 @@ const Rightcardcontent = (props) => {
     <div>
       <div className='absolute top-0 left-0 h-full w-full p-6 flex flex-col justify-between'>
         
-        <h2 className='bg-white rounded-full text-2xl font-semibold h-10 w-10 flex justify-center items-center'>
-          {props.id + 1}
+        <h2 className='bg-white rounded-full text-2xl font-semibold h-10 w-10 flex justify-center items-center text-gray-900 shadow-md'>
+          {props.serialNumber}
         </h2>
 
         <div>
-          <p className='text-lg leading-relaxed text-white mb-12'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <p className='text-sm leading-relaxed text-white mb-8 line-clamp-3'>
+            {props.desc || "A major ongoing government infrastructure initiative."}
           </p>
 
           <div className='flex justify-between'>

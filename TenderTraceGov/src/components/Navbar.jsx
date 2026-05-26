@@ -15,40 +15,30 @@ const Navbar = ({ type = '' }) => {
   }, [])
 
   return (
-    <div className='relative mb-20'>
+    <div className='relative mb-22'>
 
       <div
-        className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 md:px-8 py-3 transition-all duration-300
+        className={`fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 transition-all duration-300
         ${scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-sm text-gray-900'
             : 'bg-white shadow-sm text-gray-900 border-b border-gray-100'
           }`}
       >
-        {/* Logo */}
-        <div
-          className="flex-shrink-0 flex items-center cursor-pointer"
-          onClick={() => window.location.href = '/'}
-        >
-          <span className="text-xl md:text-2xl font-bold tracking-wider">
+        <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => window.location.href = '/'}>
+          <span className="text-2xl font-bold tracking-wider">
             TenderTrace
-            {type && (
-              <span className="text-blue-600 text-base md:text-lg">
-                {" "} | {type}
-              </span>
-            )}
+            {type && <span className="text-blue-600 text-lg"> | {type}</span>}
           </span>
         </div>
 
-        {/* Menu Button */}
         <button
           onClick={() => setIsOpen(true)}
-          className='bg-gray-200 hover:bg-gray-300 transition rounded-full text-xl px-3 py-1 cursor-pointer'
+          className='bg-gray-200 rounded-full text-2xl px-2 py-1 cursor-pointer'
         >
           ☰
         </button>
       </div>
 
-      {/* Overlay */}
       {isOpen && (
         <div
           className='fixed inset-0 bg-black/40 z-40'
@@ -56,7 +46,6 @@ const Navbar = ({ type = '' }) => {
         />
       )}
 
-      {/* Sidebar */}
       <div
         className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}

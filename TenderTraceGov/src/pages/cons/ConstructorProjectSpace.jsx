@@ -61,11 +61,8 @@ const ConstructorProjectSpace = () => {
             
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-400 hidden md:block"><i className="ri-shield-check-fill mr-1 text-green-400"></i> Secure Database Sync</span>
-              <button
-                onClick={() => navigate('/constructor-dashboard')}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center shadow-lg">
-                <i className="ri-logout-box-r-line mr-2"></i>
-                Exit Workspace
+              <button onClick={() => navigate('/')} className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center shadow-lg">
+                <i className="ri-logout-box-r-line mr-2"></i> Logout
               </button>
             </div>
           </div>
