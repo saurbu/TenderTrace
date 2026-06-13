@@ -20,7 +20,6 @@ const tenderSchema = new mongoose.Schema({
     type: String,
     default: "Pending"
   },
-  // ✅ ADDED - was missing, caused pin to never save or return
   pin: {
     type: String
   }

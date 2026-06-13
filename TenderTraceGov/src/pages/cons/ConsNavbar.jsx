@@ -33,7 +33,7 @@ const ConsNavbar = ({ onOpenUploadModal }) => {
 
           <div
             className="flex-shrink-0 flex items-center cursor-pointer"
-            onClick={() => navigate('/')}
+            
           >
             <span className="text-2xl font-bold tracking-wider">
               TenderTrace <span className="text-blue-600 text-lg">| Constructor</span>
@@ -42,9 +42,9 @@ const ConsNavbar = ({ onOpenUploadModal }) => {
 
           <div className="flex items-center space-x-4 sm:space-x-6">
 
-            <span className="text-sm font-medium border border-blue-200 text-blue-700 px-3 py-1 rounded-full bg-blue-50 hidden md:inline-block">
+            {/* <span className="text-sm font-medium border border-blue-200 text-blue-700 px-3 py-1 rounded-full bg-blue-50 hidden md:inline-block">
               Constructor
-            </span>
+            </span> */}
 
             {/* <button
               onClick={onOpenUploadModal}

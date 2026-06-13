@@ -11,16 +11,14 @@ import ConstructorLogin from './pages/cons/ConstructorLogin'
 
 import GovDashboard from './pages/govt/GovDashboard'
 import ConstructorDashboard from './pages/cons/ConstructorDashboard'
-import ConstructorProjectSpace from "./pages/cons/ConstructorProjectSpace";
-
+import ConstructorProjectSpace from "./pages/cons/ConstructorProjectSpace"
+import WorkerDetails from './pages/cons/WorkerDetails'
 
 const App = () => {
   return (
     <BrowserRouter>
-
       <Routes>
 
-        {/* ✅ Public Pages WITH Navbar + Footer */}
         <Route path="/" element={
           <>
             <Navbar />
@@ -45,7 +43,7 @@ const App = () => {
           </>
         } />
 
-        {/* ✅ Dashboard Pages (NO Navbar BUT WITH Footer) */}
+
         <Route path="/gov-dashboard" element={
           <>
             <GovDashboard />
@@ -59,13 +57,23 @@ const App = () => {
             <Footer />
           </>
         } />
-        <Route
-          path="/constructor-project/:id"
-          element={<ConstructorProjectSpace />
 
-          } />
+        <Route path="/constructor-project/:id" element={
+          <>
+          <ConstructorProjectSpace />
+          <Footer />
+          </>
+        } />
+
+
+        <Route path="/worker-details/:id" element={
+          <>
+            <WorkerDetails />
+            <Footer /> 
+          </>
+        } />
+
       </Routes>
-
     </BrowserRouter>
   )
 }
