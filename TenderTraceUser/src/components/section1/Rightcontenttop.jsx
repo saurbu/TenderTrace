@@ -33,8 +33,8 @@ const stateDistrictMap = {
   ],
 
   Delhi: [
-    "New Delhi", "Central Delhi", "North Delhi",
-    "South Delhi", "East Delhi", "West Delhi"
+    "New Delhi", "Central", "North",
+    "South", "East", "West"
   ],
 
   Maharashtra: [
@@ -152,7 +152,7 @@ const Rightcontenttop = () => {
             }}
             className="w-[200px] px-4 py-3 rounded-2xl border bg-white"
           >
-            <option value="">Select State</option>
+            <option value="" >Select State</option>
             {Object.keys(stateDistrictMap).map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}

@@ -6,62 +6,75 @@ import Section2 from './components/section2/Section2'
 import Section3 from './components/section3/Section3'
 import Footer from './components/footer/Footer'
 import Navbar from './components/Navbar'
-import About from './components/about/About' // ✅ correct path
+import About from './components/about/About'
+import StateTenders from './components/state/StateTenders'
 
-// ✅ Home Page (your existing UI)
+// ✅ Home Page (DATA LAYER HERE)
 const Home = () => {
-  const users = [
-    {
-      img: 'https://images.unsplash.com/photo-1602757115429-b4190ae087be?w=600&auto=format&fit=crop&q=60',
-      intro: '',
-      tag: 'New Delhi'
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1640459665989-20669a3b6446?w=600&auto=format&fit=crop&q=60',
-      intro: '',
-      tag: 'Mumbai'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1714674731179-2b9ee665fd44?w=687',
-      intro: '',
-      tag: 'Underbanked'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1686244745026-98fc15ad3400?w=687',
-      intro: '',
-      tag: 'Satisfied'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1661590867485-c67026a70bc7?w=600',
-      intro: '',
-      tag: 'Underserved'
+
+  const [tenders, setTenders] = React.useState([])
+  const [bills, setBills] = React.useState([])
+  const [loading, setLoading] = React.useState(true)
+
+  React.useEffect(() => {
+
+    const fetchData = async () => {
+
+      try {
+        setLoading(true)
+
+        const tenderRes = await fetch('http://localhost:5000/api/tenders/all')
+        const tenderData = await tenderRes.json()
+
+        const billRes = await fetch('http://localhost:5000/api/bills/all')
+        const billData = await billRes.json()
+
+        if (tenderData.success) setTenders(tenderData.data)
+        else setTenders([])
+
+        if (billData.success) setBills(billData.data)
+        else setBills([])
+
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
+
+    fetchData()
+
+  }, [])
 
   return (
     <>
-      <Section1  />
-      <Section2 users={users} />
-      <Section3 /> 
+      <Section1 />
+
+      {/* 🚀 PASS REAL DATA TO BOTH SECTIONS */}
+      <Section2 tenders={tenders} />
+
+      <Section3
+        tenders={tenders}
+        bills={bills}
+        loading={loading}
+      />
     </>
   )
 }
 
-// ✅ Main App
+// ✅ MAIN APP
 const App = () => {
   return (
     <Router>
 
-      {/* Navbar always visible */}
       <Navbar />
 
-      {/* Page Routes */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/state/:stateName" element={<StateTenders />} />
       </Routes>
 
-      {/* Footer always visible */}
       <Footer />
 
     </Router>
