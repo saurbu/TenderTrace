@@ -2,85 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ComplaintModal from '../ComplaintModal'
 
-const Section3 = () => {
-
+const Section3 = ({ tenders, bills, loading }) => {
   const navigate = useNavigate()
 
   const [activeTab, setActiveTab] = useState("tenders")
-
-  const [tenders, setTenders] = useState([])
-  const [bills, setBills] = useState([])
-
-  const [loading, setLoading] = useState(true)
-
-  // Complaint modal state
   const [isReportModalOpen, setIsReportModalOpen] = useState(false)
   const [activeTender, setActiveTender] = useState(null)
 
-  /* -----------------------------------
-      FETCH DATA
-  ----------------------------------- */
-
-  useEffect(() => {
-
-    const fetchData = async () => {
-
-      try {
-
-        setLoading(true)
-
-        // FETCH TENDERS
-        const tenderRes = await fetch(
-          'http://localhost:5000/api/tenders/all'
-        )
-
-        const tenderData = await tenderRes.json()
-
-        if (tenderData.success) {
-
-          setTenders(tenderData.data)
-
-        } else {
-
-          setTenders([])
-
-        }
-
-        // FETCH BILLS
-        const billRes = await fetch(
-          'http://localhost:5000/api/bills/all'
-        )
-
-        const billData = await billRes.json()
-
-        if (billData.success) {
-
-          setBills(billData.data)
-
-        } else {
-
-          setBills([])
-
-        }
-
-      } catch (err) {
-
-        console.error("Fetch Error:", err)
-
-      } finally {
-
-        setLoading(false)
-
-      }
-    }
-
-    fetchData()
-
-  }, [])
-
-  /* -----------------------------------
-      STATUS COLORS
-  ----------------------------------- */
 
   const getStatusColor = (status) => {
 

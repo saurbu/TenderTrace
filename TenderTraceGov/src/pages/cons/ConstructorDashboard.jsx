@@ -213,12 +213,12 @@ const ConstructorDashboard = () => {
             </p>
           </div>
 
-          <button
+          {/* <button
             onClick={() => setIsUploadModalOpen(true)}
             className="bg-black text-white px-5 py-3 rounded-xl"
           >
             Upload Report
-          </button>
+          </button> */}
 
         </div>
 
