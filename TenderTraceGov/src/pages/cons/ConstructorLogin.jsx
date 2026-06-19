@@ -14,10 +14,6 @@ const ConstructorLogin = () => {
 
     try {
 
-      /* -----------------------------
-         TRY TENDER LOGIN
-      ----------------------------- */
-
       let res = await fetch(
         "http://localhost:5000/api/tenders/login",
         {
@@ -34,10 +30,6 @@ const ConstructorLogin = () => {
 
       let data = await res.json()
 
-      /* -----------------------------
-         IF TENDER LOGIN SUCCESS
-      ----------------------------- */
-
       if (data.success) {
 
         localStorage.setItem(
@@ -50,16 +42,12 @@ const ConstructorLogin = () => {
           "tender"
         )
 
-        alert("Tender Login Successful ✅")
 
         navigate("/constructor-dashboard")
 
         return
       }
 
-      /* -----------------------------
-         TRY BILL LOGIN
-      ----------------------------- */
 
       res = await fetch(
         "http://localhost:5000/api/bills/login",
@@ -89,7 +77,6 @@ const ConstructorLogin = () => {
           "bill"
         )
 
-        alert("Bill Login Successful ✅")
 
         navigate("/constructor-dashboard")
 
@@ -110,11 +97,11 @@ const ConstructorLogin = () => {
 
   return (
 
-    <div className="min-h-screen flex items-center justify-center bg-green-100 pt-20">
+    <div className="w-full">
 
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-[350px]">
+      <div >
 
-        <h2 className="text-2xl font-bold mb-6 text-center">
+        <h2 className="text-xl font-bold mb-4 text-center ">
           Constructor Login
         </h2>
 
@@ -122,29 +109,29 @@ const ConstructorLogin = () => {
 
           <input
             type="email"
-            placeholder="Enter Email"
+            placeholder="Email"
             value={email}
             onChange={(e) =>
               setEmail(e.target.value)
             }
-            className="w-full border px-4 py-2 mb-4 rounded-lg"
+            className="w-full border p-2 mb-3 rounded"
             required
           />
 
           <input
             type="password"
-            placeholder="Enter Password"
+            placeholder="Password"
             value={password}
             onChange={(e) =>
               setPassword(e.target.value)
             }
-            className="w-full border px-4 py-2 mb-4 rounded-lg"
+            className="w-full border p-2 mb-3 rounded"
             required
           />
 
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800"
+            className="w-full bg-black text-white py-2 rounded"
           >
             Login
           </button>
