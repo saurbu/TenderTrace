@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AttendanceSheet from './AttendanceSheet'; 
-
+import MaterialDashboardPanel from "./MaterialDashboardPanel";
 const ConstructorProjectSpace = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -294,14 +294,7 @@ const ConstructorProjectSpace = () => {
           
           <div className="lg:col-span-2">
             {!selectedDate ? (
-              <div className="bg-white rounded-3xl p-8 border border-gray-200 text-center py-20 shadow-sm">
-                <i className="ri-dashboard-3-line text-5xl text-blue-500 mb-4 block"></i>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Central Control Dashboard</h3>
-                <p className="text-gray-600 max-w-lg mx-auto mb-6">Welcome to your workspace operations control. Use the navigation portal to onboard staff dynamically or access specific logs directly.</p>
-                <button onClick={() => setShowFormModal(true)} className="inline-flex items-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 px-6 rounded-xl transition">
-                  <i className="ri-add-circle-line mr-2 text-xl text-blue-600"></i> Launch Worker Registration Panel
-                </button>
-              </div>
+              <MaterialDashboardPanel />
             ) : (
               <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm transition-all duration-300">
                 <div className="flex justify-between items-center border-b border-gray-100 pb-4 mb-6">
@@ -503,7 +496,7 @@ const ConstructorProjectSpace = () => {
             <div className="bg-gray-900 rounded-3xl p-6 shadow-2xl border border-gray-800">
               <div className="flex justify-between items-center pb-4 border-b border-gray-800 mb-4">
                 <h3 className="text-xl font-bold text-white flex items-center">
-                  <i className="ri-calendar-todo-line text-blue-500 mr-2"></i> Project Timeline
+                  <i className="ri-calendar-todo-line text-blue-500 mr-2"></i> Attendance
                 </h3>
                 <div className="flex space-x-2">
                   <button onClick={() => changeMonth(-1)} className="text-gray-400 cursor-pointer hover:text-white p-1 bg-gray-800 rounded">
