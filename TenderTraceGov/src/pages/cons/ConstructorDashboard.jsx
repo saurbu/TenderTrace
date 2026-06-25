@@ -32,7 +32,7 @@ const ConstructorDashboard = () => {
 
     try {
       const tenderRes = await fetch(
-        `http://localhost:5000/api/tenders/all?email=${contractorEmail}`
+        `${import.meta.env.VITE_API_URL}/api/tenders/all?email=${contractorEmail}`
       )
 
       const tenderData =
@@ -75,7 +75,7 @@ const ConstructorDashboard = () => {
       }
 
       const billRes = await fetch(
-        `http://localhost:5000/api/bills/all?email=${contractorEmail}`
+        `${import.meta.env.VITE_API_URL}/api/bills/all?email=${contractorEmail}`
       )
 
       const billData =

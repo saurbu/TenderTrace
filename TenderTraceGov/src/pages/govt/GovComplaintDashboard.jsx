@@ -6,7 +6,7 @@ const GovComplaintDashboard = ({ onClose }) => {
   const [selectedTender, setSelectedTender] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/complaints")
+    fetch(`${import.meta.env.VITE_API_URL}/api/complaints`)
       .then((res) => res.json())
       .then((data) => setComplaints(data))
       .catch((err) => console.error(err));

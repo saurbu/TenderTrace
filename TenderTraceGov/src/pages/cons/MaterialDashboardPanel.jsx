@@ -38,7 +38,7 @@ const MaterialDashboardPanel = () => {
        const { id: tenderId } = useParams();
 
         const res = await fetch(
-          `http://localhost:5000/api/materials/single/${tenderId}/${todayDate}`
+          `${import.meta.env.VITE_API_URL}/api/materials/single/${tenderId}/${todayDate}`
         );
 
         const data = await res.json();
@@ -84,7 +84,7 @@ const MaterialDashboardPanel = () => {
   const formData = new FormData();
   formData.append("image", file);
 
-  const res = await fetch("http://localhost:5000/api/images/upload", {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/images/upload"`, {
     method: "POST",
     body: formData,
   });
@@ -123,7 +123,7 @@ const MaterialDashboardPanel = () => {
     tenderId,
   };
 
-  const res = await fetch("http://localhost:5000/api/materials/save", {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/materials/save`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -136,7 +136,7 @@ const MaterialDashboardPanel = () => {
   setIsLocked(true);
 };
   const saveDraft = async () => {
-  await fetch("http://localhost:5000/api/materials/save", {
+  await fetch(`${import.meta.env.VITE_API_URL}/api/materials/save`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -160,7 +160,7 @@ const MaterialDashboardPanel = () => {
 useEffect(() => {
   const fetchData = async () => {
     const res = await fetch(
-      `http://localhost:5000/api/materials/single/${tenderId}/${todayDate}`
+      `${import.meta.env.VITE_API_URL}/api/materials/single/${tenderId}/${todayDate}`
     );
 
     const data = await res.json();

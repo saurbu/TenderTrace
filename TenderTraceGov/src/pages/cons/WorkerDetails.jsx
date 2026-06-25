@@ -8,7 +8,7 @@ const WorkerDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/workers/project/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/workers/project/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setWorkers(data);

@@ -76,8 +76,8 @@ const Rightcontenttop = () => {
   useEffect(() => {
     const fetchData = async () => {
       const [tRes, bRes] = await Promise.all([
-        fetch("http://localhost:5000/api/tenders/all"),
-        fetch("http://localhost:5000/api/bills/all"),
+        fetch(`${import.meta.env.VITE_API_URL}/api/tenders/all`),
+        fetch(`${import.meta.env.VITE_API_URL}/api/bills/all`),
       ]);
 
       const tData = await tRes.json();

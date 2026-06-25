@@ -58,7 +58,7 @@ const AttendanceSheet = ({
           : selectedDate
 
       const response = await fetch(
-        `http://localhost:5000/api/attendance/${tenderId}/${formattedDate}/${shiftName}`
+        `${import.meta.env.VITE_API_URL}/api/attendance/${tenderId}/${formattedDate}/${shiftName}`
       )
 
       const data = await response.json()
@@ -256,7 +256,7 @@ const AttendanceSheet = ({
     })
 
     const response = await fetch(
-      "http://localhost:5000/api/attendance/submit",
+      `${import.meta.env.VITE_API_URL}/api/attendance/submit`,
       {
         method: "POST",
         headers: {
@@ -740,7 +740,7 @@ const AttendanceSheet = ({
                     <div className="flex items-center gap-3">
                       {worker.photoUrl && (
                         <img
-                          src={`http://localhost:5000${worker.photoUrl}`}
+                          src={`${import.meta.env.VITE_API_URL}${worker.photoUrl}`}
                           alt=""
                           className="w-10 h-10 rounded-full object-cover"
                         />

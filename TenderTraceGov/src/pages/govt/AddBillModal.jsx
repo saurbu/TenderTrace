@@ -9,7 +9,7 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
   const handleGenerateId = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/bills/generate-id"
+        `${import.meta.env.VITE_API_URL}/api/bills/generate-id`
       )
       const data = await res.json()
       if (res.ok) {
@@ -46,7 +46,7 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
 }
     try {
       const res = await fetch(
-        "http://localhost:5000/api/bills/create",
+        `${import.meta.env.VITE_API_URL}/api/bills/create`,
         {
           method: "POST",
           headers: {

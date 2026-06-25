@@ -56,7 +56,7 @@ const ComplaintModal = ({
       formDataToSend.append("images", img.file);
     });
 
-    const res = await fetch("http://localhost:5000/api/complaints", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/complaints`, {
       method: "POST",
       body: formDataToSend,
     });

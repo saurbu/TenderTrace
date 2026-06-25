@@ -11,7 +11,7 @@ const ConstructorLogin = () => {
     e.preventDefault()
     try {
       let res = await fetch(
-        "http://localhost:5000/api/tenders/login",
+        `${import.meta.env.VITE_API_URL}/api/tenders/login`,
         {
           method: "POST",
           headers: {
@@ -37,7 +37,7 @@ const ConstructorLogin = () => {
         return
       }
       res = await fetch(
-        "http://localhost:5000/api/bills/login",
+        `${import.meta.env.VITE_API_URL}/api/bills/login`,
         {
           method: "POST",
           headers: {

@@ -20,7 +20,7 @@ const GovDashboard = () => {
   const fetchTenders = async () => {
   try {
     const res = await fetch(
-      'http://localhost:5000/api/tenders/all'
+      `${import.meta.env.VITE_API_URL}/api/tenders/all`
     );
     const data = await res.json();
     setProjects(Array.isArray(data.data) ? data.data : []);
@@ -31,7 +31,7 @@ const GovDashboard = () => {
   const fetchBills = async () => {
   try {
     const res = await fetch(
-      'http://localhost:5000/api/bills/all'
+      `${import.meta.env.VITE_API_URL}/api/bills/all`
     )
     const data = await res.json()
     console.log("Bills Response:", data)
@@ -52,7 +52,7 @@ const GovDashboard = () => {
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/complaints");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/complaints`);
         const data = await res.json();
         setComplaints(data);
       } catch (err) {
@@ -69,7 +69,7 @@ const GovDashboard = () => {
     }
     loadData()
     const loadComplaints = () => {
-      fetch('http://localhost:5000/api/complaints')
+      fetch(`${import.meta.env.VITE_API_URL}/api/complaints`)
         .then(res => res.json())
         .then(data => setComplaints(data))
         .catch(err =>

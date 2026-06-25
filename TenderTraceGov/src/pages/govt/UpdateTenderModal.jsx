@@ -53,7 +53,7 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
   const handleGenerateId = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/tenders/generate-id"
+        `${import.meta.env.VITE_API_URL}/api/tenders/generate-id`
       )
       const data = await res.json()
 
@@ -89,7 +89,7 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
     }
     try {
       const res = await fetch(
-        "http://localhost:5000/api/tenders/create",
+        `${import.meta.env.VITE_API_URL}/api/tenders/create`,
         {
           method: "POST",
           headers: {

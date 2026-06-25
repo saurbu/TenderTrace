@@ -45,7 +45,7 @@ const ProjectDetails = () => {
     const formattedDate = formatDate(selectedDate);
 
     const res = await fetch(
-      `http://localhost:5000/api/project/${id}/details-by-date/${formattedDate}`
+      `${import.meta.env.VITE_API_URL}/api/project/${id}/details-by-date/${formattedDate}`
     );
 
     const result = await res.json();
@@ -72,7 +72,7 @@ const ProjectDetails = () => {
 
       console.log("isBill:", !!project?.billTitle);
       const billRes = await fetch(
-        `http://localhost:5000/api/bills/${id}`
+        `${import.meta.env.VITE_API_URL}/api/bills/${id}`
       );
       const billData = await billRes.json();
 
@@ -208,7 +208,7 @@ const ProjectDetails = () => {
       console.log(pair[0], pair[1]);
     }
     const res = await fetch(
-      "http://localhost:5000/api/complaints",
+      `${import.meta.env.VITE_API_URL}/api/complaints`,
       {
         method: "POST",
         body: formData,

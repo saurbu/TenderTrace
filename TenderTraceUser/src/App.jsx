@@ -23,10 +23,10 @@ const Home = () => {
       try {
         setLoading(true)
 
-        const tenderRes = await fetch('http://localhost:5000/api/tenders/all')
+        const tenderRes = await fetch(`${import.meta.env.VITE_API_URL}/api/tenders/all`)
         const tenderData = await tenderRes.json()
 
-        const billRes = await fetch('http://localhost:5000/api/bills/all')
+        const billRes = await fetch(`${import.meta.env.VITE_API_URL}/api/bills/all`)
         const billData = await billRes.json()
 
         if (tenderData.success) setTenders(tenderData.data)

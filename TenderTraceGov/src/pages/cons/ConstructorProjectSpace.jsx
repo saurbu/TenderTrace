@@ -33,14 +33,14 @@ const ConstructorProjectSpace = () => {
   const [cameraStream, setCameraStream] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/workers/project/${id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/workers/project/${id}`)
       .then(res => res.json())
       .then(data => {
         setWorkers(data);
       })
       .catch(err => console.error(err));
     const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
-    fetch(`http://localhost:5000/api/attendance/status/${id}?date=${formattedDate}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/attendance/status/${id}?date=${formattedDate}`)
       .then(res => res.json())
       .then(data => {
         if (data.morning) {
@@ -89,7 +89,7 @@ const ConstructorProjectSpace = () => {
     setIsAttendanceViewActive(false);
 
     try {
-      const res = await fetch('http://localhost:5000/api/attendance/save-summary', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/attendance/save-summary`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -112,7 +112,7 @@ const ConstructorProjectSpace = () => {
           : selectedDate;
 
       const response = await fetch(
-        `http://localhost:5000/api/attendance/${id}/${formattedDate}/${shiftName}`
+        `${import.meta.env.VITE_API_URL}/api/attendance/${id}/${formattedDate}/${shiftName}`
       );
 
       const data = await response.json();
@@ -201,7 +201,7 @@ const ConstructorProjectSpace = () => {
     if (formData.imageFile) multiPartForm.append('imageFile', formData.imageFile);
 
     try {
-      const res = await fetch('http://localhost:5000/api/workers', { method: 'POST', body: multiPartForm });
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/workers`, { method: 'POST', body: multiPartForm });
       if (!res.ok) throw new Error("Failed to save");
       const newWorker = await res.json();
       setWorkers([newWorker, ...workers]);
