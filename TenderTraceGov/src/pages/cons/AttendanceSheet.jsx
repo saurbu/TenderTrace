@@ -304,8 +304,6 @@ const AttendanceSheet = ({
 
   return (
     <div className="animate-fade-in space-y-4 relative">
-      
-      {/* Active Header Workspace Bar */}
       <div className="p-5 rounded-2xl border border-gray-100 bg-gray-50/80 shadow-sm">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
@@ -367,7 +365,6 @@ const AttendanceSheet = ({
         </div>
       </div>
 
-      {/* Crew Directory List Container */}
       {isPastDate ? (
 
         savedAttendance?.found ? (
@@ -565,7 +562,6 @@ const AttendanceSheet = ({
 
       )}
 
-      {/* Center Camera Overlay Popup */}
       {isCameraActive && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
           <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-gray-100 text-center">
@@ -738,33 +734,33 @@ const AttendanceSheet = ({
                   className="border rounded-lg p-3 flex justify-between items-center"
                 >
                   <div
-  key={worker.workerId}
-  className="border rounded-lg p-3 flex items-center justify-between"
->
-  <div className="flex items-center gap-3">
-    {worker.photoUrl && (
-      <img
-        src={`http://localhost:5000${worker.photoUrl}`}
-        alt=""
-        className="w-10 h-10 rounded-full object-cover"
-      />
-    )}
+                    key={worker.workerId}
+                    className="border rounded-lg p-3 flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-3">
+                      {worker.photoUrl && (
+                        <img
+                          src={`http://localhost:5000${worker.photoUrl}`}
+                          alt=""
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                      )}
 
-    <div>
-      <p className="font-medium">
-        {worker.workerName}
-      </p>
+                      <div>
+                        <p className="font-medium">
+                          {worker.workerName}
+                        </p>
 
-      <p className="text-xs text-gray-500">
-        {worker.designation}
-      </p>
-    </div>
-  </div>
+                        <p className="text-xs text-gray-500">
+                          {worker.designation}
+                        </p>
+                      </div>
+                    </div>
 
-  <span className="text-green-600 font-semibold">
-    Present
-  </span>
-</div>
+                    <span className="text-green-600 font-semibold">
+                      Present
+                    </span>
+                  </div>
 
                   <span className="text-green-600 font-semibold">
                     Present

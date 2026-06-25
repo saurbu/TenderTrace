@@ -11,6 +11,8 @@ import attendanceRoutes from "./routes/attendance.js";
 import materialRoutes from "./routes/materialRoutes.js"; 
 import path from "path";
 import imageRoutes from "./routes/imageRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
+import complaintRoutes from "./routes/complaintRoutes.js";
 
 dotenv.config({ path: resolve(process.cwd(), ".env") });
 connectDB();
@@ -29,6 +31,8 @@ app.use("/api/attendance", attendanceRoutes);
 app.use("/api/images", imageRoutes);
 
 app.use("/api/materials", materialRoutes);
+app.use("/api/project", projectRoutes);
+app.use("/api/complaints", complaintRoutes);
 
 app.get("/", (req, res) => {
   res.send("API Running ✅");
@@ -38,4 +42,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} 🚀`);
 });
-console.log("IMAGEKIT KEY:", process.env.IMAGEKIT_PUBLIC_KEY);
+app.use("/api/complaints", complaintRoutes);

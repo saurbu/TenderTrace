@@ -29,7 +29,6 @@ const WorkerSchema = new mongoose.Schema({
     type: String, 
     default: "" 
   },
-  // Tracks active state counters directly on the document level for card-level summaries
   isPresentToday: { 
     type: Boolean, 
     default: false 

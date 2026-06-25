@@ -46,7 +46,6 @@ const Section3 = ({ tenders, bills, loading }) => {
 
       <div className="max-w-7xl mx-auto">
 
-        {/* HEADER */}
         <div className="text-center mb-10">
 
           <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
@@ -59,7 +58,6 @@ const Section3 = ({ tenders, bills, loading }) => {
 
         </div>
 
-        {/* TABS */}
         <div className="flex justify-center gap-4 mb-10">
 
           <button
@@ -86,7 +84,6 @@ const Section3 = ({ tenders, bills, loading }) => {
 
         </div>
 
-        {/* LOADING */}
         {loading ? (
 
           <div className="flex justify-center items-center h-64">
@@ -105,37 +102,24 @@ const Section3 = ({ tenders, bills, loading }) => {
             }}
           >
 
-            {/* -----------------------------------
-                TENDERS
-            ----------------------------------- */}
-
             {activeTab === "tenders" && (
-
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-6">
-
                 {tenders.map((tender) => (
-
                   <div
                     key={tender._id || tender.id}
                     className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group"
                   >
-
                     <div className="p-6 flex-grow">
-
                       <div className="flex justify-between items-start mb-4">
-
                         <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full border border-gray-200">
                           {tender.id}
                         </span>
-
                         <span
                           className={`text-xs font-bold px-3 py-1 rounded-full border ${getStatusColor(tender.status)}`}
                         >
                           {tender.status}
                         </span>
-
                       </div>
-
                       <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-700 transition-colors">
                         {tender.tenderName}
                       </h3>
@@ -144,7 +128,6 @@ const Section3 = ({ tenders, bills, loading }) => {
                         <i className="ri-building-4-line mr-2 text-lg"></i>
                         {tender.companyName}
                       </p>
-
                       <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-5 rounded-xl border border-gray-100">
 
                         <div>
@@ -192,8 +175,11 @@ const Section3 = ({ tenders, bills, loading }) => {
 
                       <button
                         onClick={() => {
-                          setActiveTender(tender)
-                          setIsReportModalOpen(true)
+                          setActiveTender({
+                            id: bill._id || bill.id,
+                            tenderName: bill.billTitle || bill.title || "Government Bill"
+                          });
+                          setIsReportModalOpen(true);
                         }}
                         className="flex-1 mr-2 text-center text-sm font-bold text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 transition-colors py-2 rounded-lg flex items-center justify-center border border-red-100"
                       >
@@ -221,29 +207,18 @@ const Section3 = ({ tenders, bills, loading }) => {
 
             )}
 
-            {/* -----------------------------------
-                BILLS
-            ----------------------------------- */}
-
             {activeTab === "bills" && (
-
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pb-6">
-
                 {bills.map((bill) => (
-
                   <div
                     key={bill._id || bill.id}
                     className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group"
                   >
-
                     <div className="p-6 flex-grow">
-
                       <div className="flex justify-between items-start mb-4">
-
                         <span className="text-xs font-bold text-purple-700 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
                           {bill.id}
                         </span>
-
                         <span
                           className={`text-xs font-bold px-3 py-1 rounded-full border ${getStatusColor(bill.status)}`}
                         >
@@ -317,6 +292,7 @@ const Section3 = ({ tenders, bills, loading }) => {
                     <div className="px-6 py-4 border-t border-gray-100 bg-gray-50">
 
                       <button
+                        onClick={() => navigate(`/projects/${bill.id || bill._id}`)}
                         className="w-full text-center text-sm font-bold text-white bg-purple-600 hover:bg-purple-700 transition-colors py-2 rounded-lg shadow-sm"
                       >
                         View Bill
@@ -337,13 +313,11 @@ const Section3 = ({ tenders, bills, loading }) => {
         )}
 
       </div>
-
-      {/* COMPLAINT MODAL */}
       <ComplaintModal
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}
-        tenderTitle={activeTender?.tenderName}
         tenderId={activeTender?.id}
+        tenderName={activeTender?.tenderName}
       />
 
     </div>

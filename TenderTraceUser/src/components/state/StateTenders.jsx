@@ -19,8 +19,6 @@ const StateTenders = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-
-  /* ---------------- FETCH ---------------- */
   useEffect(() => {
 
     const fetchData = async () => {
@@ -47,8 +45,6 @@ const StateTenders = () => {
 
     fetchData()
   }, [])
-
-  /* ---------------- STATE PARSE (IMPORTANT FIX) ---------------- */
   const getState = (location = "") => {
     if (!location) return ""
     return location.split('-')[0].trim().toLowerCase()
@@ -57,7 +53,6 @@ const StateTenders = () => {
   const matchState = (item) =>
     getState(item.location) === stateName.toLowerCase()
 
-  /* ---------------- FILTER DATA ---------------- */
   const stateTenders = tenders.filter(matchState)
   const stateBills = bills.filter(matchState)
 
@@ -77,8 +72,6 @@ const StateTenders = () => {
   if (filter === "bills") {
     finalData = stateBills.map(b => ({ ...b, type: "bill" }))
   }
-
-  /* ---------------- STATUS COLORS (same as Section3) ---------------- */
   const getStatusColor = (status) => {
     switch(status) {
       case 'In Progress':
@@ -101,14 +94,12 @@ const StateTenders = () => {
   return (
     <div className="min-h-screen w-full px-8 md:px-18 pt-8 pb-20 bg-gray-50">
 
-      {/* HEADER */}
       <div className="text-center mb-10">
         <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
           {stateName}
         </h2>
       </div>
 
-      {/* FILTERS (same style) */}
       <div className="flex justify-center gap-4 mb-10">
 
         {["all", "tenders", "bills"].map((f) => (
@@ -126,8 +117,6 @@ const StateTenders = () => {
         ))}
 
       </div>
-
-      {/* LOADING */}
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -145,7 +134,6 @@ const StateTenders = () => {
 
               <div className="p-6 flex-grow">
 
-                {/* TOP ROW (EXACT SAME) */}
                 <div className="flex justify-between items-start mb-4">
 
                   <span className="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full border border-gray-200">
@@ -158,18 +146,15 @@ const StateTenders = () => {
 
                 </div>
 
-                {/* TITLE */}
                 <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight group-hover:text-blue-700 transition-colors">
                   {item.tenderName || item.billTitle}
                 </h3>
 
-                {/* SUB TITLE */}
                 <p className="text-sm font-semibold text-blue-600 mb-6 flex items-center">
                   <i className="ri-building-4-line mr-2 text-lg"></i>
                   {item.companyName || item.department}
                 </p>
 
-                {/* GRID INFO (EXACT SAME STYLE) */}
                 <div className="grid grid-cols-2 gap-4 text-sm bg-gray-50 p-5 rounded-xl border border-gray-100">
 
                   <div>
@@ -208,8 +193,6 @@ const StateTenders = () => {
                 </div>
 
               </div>
-
-              {/* FOOTER (EXACT SAME) */}
               <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex items-center justify-between">
 
                 <button
@@ -242,7 +225,6 @@ const StateTenders = () => {
         </div>
       )}
 
-      {/* MODAL */}
       <ComplaintModal
         isOpen={isReportModalOpen}
         onClose={() => setIsReportModalOpen(false)}

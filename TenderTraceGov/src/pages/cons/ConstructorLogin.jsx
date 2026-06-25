@@ -4,16 +4,12 @@ import { useNavigate } from 'react-router-dom'
 const ConstructorLogin = () => {
 
   const navigate = useNavigate()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const handleSubmit = async (e) => {
 
     e.preventDefault()
-
     try {
-
       let res = await fetch(
         "http://localhost:5000/api/tenders/login",
         {
@@ -27,28 +23,19 @@ const ConstructorLogin = () => {
           })
         }
       )
-
       let data = await res.json()
-
       if (data.success) {
-
         localStorage.setItem(
           "contractorEmail",
           data.user.email
         )
-
         localStorage.setItem(
           "loginType",
           "tender"
         )
-
-
         navigate("/constructor-dashboard")
-
         return
       }
-
-
       res = await fetch(
         "http://localhost:5000/api/bills/login",
         {
@@ -64,49 +51,33 @@ const ConstructorLogin = () => {
       )
 
       data = await res.json()
-
       if (data.success) {
-
         localStorage.setItem(
           "contractorEmail",
           data.user.email
         )
-
         localStorage.setItem(
           "loginType",
           "bill"
         )
-
-
         navigate("/constructor-dashboard")
-
       } else {
-
         alert("Invalid Email or Password ❌")
 
       }
 
     } catch (error) {
-
       console.log(error)
-
       alert("Server Error ❌")
-
     }
   }
-
   return (
-
     <div className="w-full">
-
       <div >
-
         <h2 className="text-xl font-bold mb-4 text-center ">
           Constructor Login
         </h2>
-
         <form onSubmit={handleSubmit}>
-
           <input
             type="email"
             placeholder="Email"
@@ -117,7 +88,6 @@ const ConstructorLogin = () => {
             className="w-full border p-2 mb-3 rounded"
             required
           />
-
           <input
             type="password"
             placeholder="Password"
@@ -128,18 +98,14 @@ const ConstructorLogin = () => {
             className="w-full border p-2 mb-3 rounded"
             required
           />
-
           <button
             type="submit"
             className="w-full bg-black text-white py-2 rounded"
           >
             Login
           </button>
-
         </form>
-
       </div>
-
     </div>
   )
 }

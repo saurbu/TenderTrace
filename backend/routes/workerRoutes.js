@@ -6,8 +6,6 @@ const router = express.Router();
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
-// GET: Fetch all workers for a specific tender/project ID
 router.get("/project/:id", async (req, res) => {
   try {
     const workers = await Worker.find({ tenderId: req.params.id }).sort({ createdAt: -1 });
@@ -17,7 +15,6 @@ router.get("/project/:id", async (req, res) => {
   }
 });
 
-// POST: Add a new worker 
 router.post("/", upload.single("imageFile"), async (req, res) => {
   try {
     const { name, mobile, aadhaar, designation, address, tenderId } = req.body;
@@ -46,7 +43,6 @@ router.post("/", upload.single("imageFile"), async (req, res) => {
   }
 });
 
-// NEW POST endpoint: Updates all matching workers inside MongoDB directly 
 router.post("/submit-attendance-summary", async (req, res) => {
   try {
     const { tenderId } = req.body;
@@ -55,7 +51,6 @@ router.post("/submit-attendance-summary", async (req, res) => {
       return res.status(400).json({ error: "Missing active project Tender ID parameters." });
     }
 
-    // Set workforce records associated with this context segment to present status inside MongoDB
     await Worker.updateMany(
       { tenderId: tenderId },
       { $set: { isPresentToday: true } }

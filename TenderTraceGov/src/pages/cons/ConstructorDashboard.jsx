@@ -31,10 +31,6 @@ const ConstructorDashboard = () => {
   const fetchData = async () => {
 
     try {
-
-      /* -----------------------------
-         FETCH TENDERS
-      ----------------------------- */
       const tenderRes = await fetch(
         `http://localhost:5000/api/tenders/all?email=${contractorEmail}`
       )
@@ -78,9 +74,6 @@ const ConstructorDashboard = () => {
           }))
       }
 
-      /* -----------------------------
-         FETCH BILLS
-      ----------------------------- */
       const billRes = await fetch(
         `http://localhost:5000/api/bills/all?email=${contractorEmail}`
       )
@@ -123,9 +116,6 @@ const ConstructorDashboard = () => {
           }))
       }
 
-      /* -----------------------------
-         MERGE BOTH
-      ----------------------------- */
       setProjects([
         ...tenderProjects,
         ...billProjects
@@ -200,7 +190,6 @@ const ConstructorDashboard = () => {
 
       <main className="max-w-7xl mx-auto px-4 py-8">
 
-        {/* TOP */}
         <div className="mb-10 flex justify-between items-center">
 
           <div>
@@ -222,7 +211,6 @@ const ConstructorDashboard = () => {
 
         </div>
 
-        {/* STATS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
 
           <div className="bg-white p-6 rounded-2xl shadow">
@@ -265,7 +253,6 @@ const ConstructorDashboard = () => {
 
         </div>
 
-        {/* PROJECTS */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
           {projects.map((project) => (
@@ -350,7 +337,6 @@ const ConstructorDashboard = () => {
 
       </main>
 
-      {/* MODAL */}
       <UploadDetailsModal
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}
@@ -358,7 +344,6 @@ const ConstructorDashboard = () => {
         projects={projects}
       />
 
-      {/* PIN MODAL */}
       {isPinModalOpen && (
 
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">

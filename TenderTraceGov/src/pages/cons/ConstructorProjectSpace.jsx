@@ -5,17 +5,12 @@ import MaterialDashboardPanel from "./MaterialDashboardPanel";
 const ConstructorProjectSpace = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [workers, setWorkers] = useState([]);
   const [showFormModal, setShowFormModal] = useState(false); 
   const [currentDate, setCurrentDate] = useState(new Date()); 
   const [selectedDate, setSelectedDate] = useState(null); 
-  
-  // States to handle active inline attendance view inside logs area
-  const [isAttendanceViewActive, setIsAttendanceViewActive] = useState(false);
+    const [isAttendanceViewActive, setIsAttendanceViewActive] = useState(false);
   const [activeShift, setActiveShift] = useState(''); 
-
-  // --- SHIFT-SPECIFIC STATES ---
   const [morningSubmitted, setMorningSubmitted] = useState(false);
   const [eveningSubmitted, setEveningSubmitted] = useState(false);
   const [morningStats, setMorningStats] = useState({ total: 0, present: 0 });
@@ -37,7 +32,6 @@ const ConstructorProjectSpace = () => {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [cameraStream, setCameraStream] = useState(null);
 
-  // Fetch workers list and saved shift summaries for selected dates
   useEffect(() => {
     fetch(`http://localhost:5000/api/workers/project/${id}`)
       .then(res => res.json())
@@ -45,8 +39,6 @@ const ConstructorProjectSpace = () => {
         setWorkers(data);
       })
       .catch(err => console.error(err));
-
-    // Pull status data from database to restore card view metrics
     const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
     fetch(`http://localhost:5000/api/attendance/status/${id}?date=${formattedDate}`)
       .then(res => res.json())
@@ -74,8 +66,6 @@ const ConstructorProjectSpace = () => {
       })
       .catch(err => console.error("Error fetching status logs:", err));
   }, [id, selectedDate]);
-
-  // Callback function executed inside AttendanceSheet submission
   const handleAttendanceCompletion = async (shiftName, presentWorkersCount) => {
     setIsSubmitting(true);
     const totalWorkersCount = workers.length;
@@ -88,11 +78,7 @@ const ConstructorProjectSpace = () => {
       totalWorkers: totalWorkersCount,
       presentWorkers: verifiedPresentCount
     };
-
-    // Safely check which shift was submitted using lowercase matching
     const isMorningShift = shiftName.toLowerCase().includes('morning');
-
-    // Optimistically update metrics locally right away so the user sees results instantly
     if (isMorningShift) {
       setMorningStats({ total: totalWorkersCount, present: verifiedPresentCount });
       setMorningSubmitted(true);
@@ -340,9 +326,7 @@ const ConstructorProjectSpace = () => {
                   />
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in">
-                    
-                    {/* Morning Shift Card */}
-                    <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col justify-between hover:shadow-md transition">
+                                        <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col justify-between hover:shadow-md transition">
                       <div>
                         <div className="flex justify-between items-center mb-4">
                           <span className="bg-amber-100 text-amber-800 font-bold text-xs px-3 py-1 rounded-full flex items-center font-mono">
@@ -352,8 +336,6 @@ const ConstructorProjectSpace = () => {
                         </div>
                         <h4 className="text-xl font-extrabold text-gray-900 mb-1">10:00 AM Session</h4>
                         <p className="text-xs text-gray-500 mb-6 leading-relaxed">Log entries for raw labor clock-ins, primary verification checks, and safety briefings.</p>
-                        
-                        {/* Metrics Report Block */}
                         {morningSubmitted && (
                           <div className="bg-blue-900 text-white rounded-xl p-4 mb-5 text-center border border-blue-950 shadow-inner animate-fade-in">
                             <div className="text-[10px] font-bold text-blue-300 uppercase tracking-widest mb-2">Shift Dashboard Report</div>
@@ -404,8 +386,6 @@ const ConstructorProjectSpace = () => {
                         )}
                       </div>
                     </div>
-
-                    {/* Evening Shift Card */}
                     <div className="bg-white rounded-2xl p-6 border border-gray-200 flex flex-col justify-between hover:shadow-md transition">
                       <div>
                         <div className="flex justify-between items-center mb-4">
@@ -416,8 +396,6 @@ const ConstructorProjectSpace = () => {
                         </div>
                         <h4 className="text-xl font-extrabold text-gray-900 mb-1">04:00 PM Session</h4>
                         <p className="text-xs text-gray-500 mb-6 leading-relaxed">Log check-outs, recorded shift hours completions, and site structural clearance validations.</p>
-                        
-                        {/* Metrics Report Block */}
                         {eveningSubmitted && (
                           <div className="bg-blue-900 text-white rounded-xl p-4 mb-5 text-center border border-blue-950 shadow-inner animate-fade-in">
                             <div className="text-[10px] font-bold text-blue-300 uppercase tracking-widest mb-2">Shift Dashboard Report</div>
@@ -474,8 +452,6 @@ const ConstructorProjectSpace = () => {
               </div>
             )}
           </div>
-
-          {/* Right Sidebar Column Layout */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-gray-900 rounded-3xl p-6 shadow-2xl border border-gray-800 text-center">
               <div className="w-16 h-16 bg-blue-600/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-500/20">
@@ -492,7 +468,6 @@ const ConstructorProjectSpace = () => {
               </button>
             </div>
 
-            {/* Calendar */}
             <div className="bg-gray-900 rounded-3xl p-6 shadow-2xl border border-gray-800">
               <div className="flex justify-between items-center pb-4 border-b border-gray-800 mb-4">
                 <h3 className="text-xl font-bold text-white flex items-center">
@@ -542,8 +517,6 @@ const ConstructorProjectSpace = () => {
 
         </div>
       </main>
-
-      {/* Popup Form Modal Area */}
       {showFormModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-2xl w-full p-8 shadow-2xl relative border border-gray-100 max-h-[95vh] overflow-y-auto">
@@ -613,23 +586,23 @@ const ConstructorProjectSpace = () => {
         </div>
       )}
       {viewAttendanceModal && selectedShiftData && (
-  <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
 
-    <div className="bg-white rounded-2xl p-5 w-full max-w-md">
+        <div className="bg-white rounded-2xl p-5 w-full max-w-md">
 
-      <div className="flex justify-between mb-4">
-        <h3 className="font-bold text-lg">
-          {selectedShiftData?.shift || "Attendance Details"}
-        </h3>
+          <div className="flex justify-between mb-4">
+            <h3 className="font-bold text-lg">
+              {selectedShiftData?.shift || "Attendance Details"}
+            </h3>
 
-        <button
-          onClick={() => setViewAttendanceModal(false)}
-        >
-          ✕
-        </button>
-      </div>
+            <button
+              onClick={() => setViewAttendanceModal(false)}
+            >
+              ✕
+            </button>
+          </div>
 
-      <div className="space-y-2 max-h-96 overflow-y-auto">
+          <div className="space-y-2 max-h-96 overflow-y-auto">
 
                 {selectedShiftData.attendanceList
                   ?.filter(w => w.status === "Present")

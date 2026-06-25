@@ -4,15 +4,10 @@ import Bill from "../models/Bill.js";
 
 const router = express.Router();
 
-// LOGIN (check BOTH Tender + Bill)
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // 1. check Tender collection
     let user = await Tender.findOne({ email, password });
-
-    // 2. if not found, check Bill collection
     if (!user) {
       user = await Bill.findOne({ email, password });
     }

@@ -8,7 +8,6 @@ const Home = () => {
   return (
     <div className="w-full min-h-screen flex flex-col md:flex-row bg-gray-100 ">
 
-      {/* LEFT PANEL - INFO SECTION */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-start px-10 py-10 bg-gradient-to-br from-blue-300 to-blue-500 text-white">
 
         <h1 className="text-3xl font-bold mb-4 text-red-500 shadow-amber-500">
@@ -32,13 +31,10 @@ const Home = () => {
         </ul>
 
       </div>
-
-      {/* RIGHT PANEL - LOGIN */}
       <div className="w-full md:w-1/2 flex justify-center items-center p-6">
 
         <div className="bg-white shadow-xl rounded-2xl w-[380px] p-6">
 
-          {/* SWITCH BUTTONS (ONLY ONCE HERE) */}
           <div className="flex bg-gray-100 p-2 rounded-full mb-6">
 
             <button
@@ -65,7 +61,6 @@ const Home = () => {
 
           </div>
 
-          {/* LOGIN FORMS */}
           {activeTab === "gov" ? (
             <GovernmentLogin embedded />
           ) : (

@@ -3,9 +3,6 @@ import Attendance from "../models/Attendance.js";
 
 const router = express.Router();
 
-/*
-  SAVE ATTENDANCE
-*/
 router.post("/submit", async (req, res) => {
   try {
     const {
@@ -35,8 +32,6 @@ router.post("/submit", async (req, res) => {
 
     const endDate = new Date(date);
     endDate.setHours(23, 59, 59, 999);
-
-    // Check duplicate attendance
     const existingAttendance = await Attendance.findOne({
       tenderId: String(tenderId),
       shift,
@@ -78,9 +73,6 @@ router.post("/submit", async (req, res) => {
   }
 });
 
-/*
-  DASHBOARD SUMMARY
-*/
 router.get("/dashboard-summary/:tenderId", async (req, res) => {
   try {
     const { tenderId } = req.params;
@@ -156,9 +148,7 @@ router.get("/status/:tenderId", async (req, res) => {
     });
   }
 });
-/*
-  GET SINGLE ATTENDANCE SHEET
-*/
+
 router.get("/:tenderId/:date/:shift", async (req, res) => {
   try {
     const { tenderId, date, shift } = req.params;

@@ -3,14 +3,11 @@ import { useNavigate } from "react-router-dom"
 
 const GovernmentLogin = ({ embedded = false }) => {
   const navigate = useNavigate()
-
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    // demo login (you can connect API later)
     localStorage.setItem("email", email)
 
     alert("Government Login Success ✅")
@@ -23,7 +20,6 @@ const GovernmentLogin = ({ embedded = false }) => {
       <h2 className="text-xl font-bold mb-4 text-center text-blue-700">
         Government Login
       </h2>
-
       <input
         type="email"
         placeholder="Email"
@@ -32,7 +28,6 @@ const GovernmentLogin = ({ embedded = false }) => {
         className="w-full border p-2 mb-3 rounded"
         required
       />
-
       <input
         type="password"
         placeholder="Password"
@@ -41,7 +36,6 @@ const GovernmentLogin = ({ embedded = false }) => {
         className="w-full border p-2 mb-3 rounded"
         required
       />
-
       <button className="w-full bg-blue-700 text-white py-2 rounded">
         Login
       </button>

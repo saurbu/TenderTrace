@@ -22,7 +22,6 @@ const MaterialDashboardPanel = () => {
     },
   });
 
-  // ---------------- CALC TOTAL ----------------
   const calculateItemTotal = (price, quantity) =>
     (Number(price) || 0) * (Number(quantity) || 0);
 
@@ -33,7 +32,6 @@ const MaterialDashboardPanel = () => {
     }));
   }, [form.price, form.quantity]);
 
-  // ---------------- LOAD FROM DB (IMPORTANT FIX) ----------------
   useEffect(() => {
     const fetchToday = async () => {
       try {
@@ -56,7 +54,6 @@ const MaterialDashboardPanel = () => {
     if (tenderId) fetchToday();
   }, [tenderId]);
 
-  // ---------------- IMAGE HANDLER (UNCHANGED UI) ----------------
   const handleImage = async (e, type) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -93,9 +90,8 @@ const MaterialDashboardPanel = () => {
   });
 
   const data = await res.json();
-  return data.url; // ImageKit URL
+  return data.url;
 };
-  // ---------------- ADD MATERIAL ----------------
   const addMaterial = () => {
   if (isLocked) return;
 
@@ -114,11 +110,9 @@ const MaterialDashboardPanel = () => {
   setShowModal(false);
 }; 
 
-  // ---------------- FINAL TOTAL ----------------
   const getFinalTotal = () =>
     materials.reduce((sum, m) => sum + (Number(m.total) || 0), 0);
 
-  // ---------------- SAVE TO DB ----------------
   const handleSubmitToday = async () => {
   if (isLocked) return;
 
@@ -139,7 +133,7 @@ const MaterialDashboardPanel = () => {
 
   if (!res.ok) throw new Error(data.message);
 
-  setIsLocked(true); // 🔒 LOCK AFTER SUBMIT
+  setIsLocked(true);
 };
   const saveDraft = async () => {
   await fetch("http://localhost:5000/api/materials/save", {
@@ -175,14 +169,13 @@ useEffect(() => {
       setMaterials(data.data.materials || []);
 
       if (data.data._id) {
-        setIsLocked(true); // ✅ already submitted OR saved
+        setIsLocked(true); 
       }
     }
   };
 
   fetchData();
 }, [tenderId, todayDate]);
-  // ---------------- LOCK SCREEN (UNCHANGED) ----------------
   if (isSubmitted) {
     return (
       <div className="h-screen flex flex-col bg-white p-6">
@@ -213,7 +206,6 @@ useEffect(() => {
   return (
     <div className="h-screen flex flex-col bg-white rounded-2xl shadow-2xl">
 
-      {/* HEADER (UNCHANGED UI) */}
       <div className="px-6 py-4 flex justify-between items-center shadow">
         <div>
           <h2 className="text-xl font-bold">Material Dashboard</h2>
@@ -230,7 +222,6 @@ useEffect(() => {
         </button>
       </div>
 
-      {/* MATERIAL LIST (UNCHANGED UI) */}
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
 
         {materials.length === 0 && (
@@ -264,7 +255,6 @@ useEffect(() => {
 
       </div>
 
-      {/* FOOTER (UNCHANGED UI) */}
       {materials.length > 0 && (
         <div className="border-t p-4 space-y-3">
 
@@ -288,7 +278,6 @@ useEffect(() => {
         </div>
       )}
 
-      {/* MODAL (UNCHANGED UI) */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
 
@@ -326,8 +315,6 @@ useEffect(() => {
                 }
               />
             </div>
-
-            {/* TOTAL */}
             <div className="mt-3 bg-gray-100 p-3 rounded-xl text-center">
               <p className="text-xs text-gray-500">Item Total</p>
               <p className="text-lg font-bold text-green-600">
@@ -335,7 +322,6 @@ useEffect(() => {
               </p>
             </div>
 
-            {/* IMAGES (UNCHANGED UI) */}
             <div className="grid grid-cols-3 gap-2 mt-4">
 
               {["product", "bill", "barcode"].map((type) => (

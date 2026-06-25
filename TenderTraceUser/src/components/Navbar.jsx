@@ -23,7 +23,6 @@ const Navbar = () => {
           : 'bg-transparent'
       }`}
     >
-      {/* Logo */}
       <div
         className="flex-shrink-0 flex items-center cursor-pointer"
         onClick={() => navigate('/')}
@@ -34,13 +33,10 @@ const Navbar = () => {
           }`}
         >
           TenderTrace{' '}
-          <span className="text-lg text-blue-600 transition-colors duration-300">
-            | User
-          </span>
+          
         </span>
       </div>
 
-      {/* Buttons */}
       <div className="flex items-center gap-2">
         <button
           onClick={() => {

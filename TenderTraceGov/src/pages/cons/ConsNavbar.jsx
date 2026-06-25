@@ -7,7 +7,6 @@ const ConsNavbar = ({ onOpenUploadModal }) => {
   const [email, setEmail] = useState("")
   const dropdownRef = useRef(null)
 
-  // ✅ GET EMAIL FROM LOCAL STORAGE (NO BACKEND NEEDED)
   useEffect(() => {
     const storedEmail = localStorage.getItem("email")
     if (storedEmail) {
@@ -15,7 +14,6 @@ const ConsNavbar = ({ onOpenUploadModal }) => {
     }
   }, [])
 
-  // Close dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {

@@ -1,9 +1,5 @@
 import Bill from "../models/Bill.js";
 import bcrypt from "bcrypt";
-
-/* -----------------------------
-   GENERATE BILL ID
------------------------------ */
 export const generateBillId = async (req, res) => {
 
   try {
@@ -15,7 +11,6 @@ export const generateBillId = async (req, res) => {
 
     let nextNumber = 1;
 
-    // ✅ IMPORTANT FIX
     if (lastBill && lastBill.id) {
 
       const parts = lastBill.id.split("_");
@@ -44,13 +39,8 @@ export const generateBillId = async (req, res) => {
 
 };
 
-/* -----------------------------
-   CREATE BILL
------------------------------ */
 export const createBill = async (req, res) => {
-
   try {
-
     const {
       id,
       billTitle,
@@ -64,79 +54,67 @@ export const createBill = async (req, res) => {
       email
     } = req.body;
 
-    // ✅ PASSWORD
+    if (
+      !id ||
+      !billTitle ||
+      !department ||
+      !status ||
+      !location ||
+      !wardNo ||
+      !targetDate ||
+      !budget ||
+      !summary ||
+      !email
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required"
+      });
+    }
+
+    const username = email.split("@")[0];
+
     const rawPassword =
-      email.split("@")[0] + id.slice(-4);
+      username.substring(0, 4) +
+      id.slice(-4);
 
-    // ❌ DO NOT HASH HERE
-    // MODEL WILL HASH AUTOMATICALLY
+    const pin = (
+      Math.floor(Math.random() * 900000) + 100000
+    ).toString();
 
-    // ✅ PIN
-    const pin =
-      Math.floor(
-        100000 + Math.random() * 900000
-      ).toString();
-
-    const bill = new Bill({
-
+    const bill = await Bill.create({
       id,
-
       billTitle,
-
       department,
-
       status,
-
       location,
-
       wardNo,
-
       targetDate,
-
       budget,
-
       summary,
-
-      email: email.trim().toLowerCase(),
-
+      email: email.toLowerCase(),
       password: rawPassword,
-
       pin
-
     });
 
-    await bill.save();
-
-    res.json({
-
+    return res.status(201).json({
       success: true,
-
-      message: "Bill Created Successfully",
-
-      billId: id,
-
+      billId: bill.id,
       password: rawPassword,
-
       pin
-
     });
 
   } catch (error) {
-
+    console.log("CREATE BILL ERROR:");
     console.log(error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       error: error.message
     });
-
   }
-
 };
 
-/* -----------------------------
-   GET ALL BILLS
------------------------------ */
 export const getAllBills = async (req, res) => {
 
   try {
@@ -171,9 +149,6 @@ export const getAllBills = async (req, res) => {
 
 };
 
-/* -----------------------------
-   BILL LOGIN
------------------------------ */
 
 export const loginBillUser = async (req, res) => {
 
@@ -181,7 +156,6 @@ export const loginBillUser = async (req, res) => {
 
     const { email, password } = req.body;
 
-    // CHECK USER
     const user = await Bill.findOne({
       email: email.trim().toLowerCase()
     });
@@ -195,7 +169,6 @@ export const loginBillUser = async (req, res) => {
 
     }
 
-    // COMPARE PASSWORD
     const isMatch =
       await bcrypt.compare(password, user.password);
 
@@ -233,4 +206,37 @@ export const loginBillUser = async (req, res) => {
 
   }
 
+};
+
+export const getBillById = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    const bill = await Bill.findOne({
+      id: id
+    });
+
+    if (!bill) {
+      return res.status(404).json({
+        success: false,
+        message: "Bill not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: bill
+    });
+
+  } catch (error) {
+
+    console.log("GET BILL ERROR:", error);
+
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+
+  }
 };
