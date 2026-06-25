@@ -9,7 +9,13 @@ const Home = () => {
     <div className="w-full min-h-screen flex flex-col md:flex-row bg-gray-100 ">
 
       <div className="w-full md:w-1/2 flex flex-col justify-center items-start px-10 py-10 bg-gradient-to-br from-blue-300 to-blue-500 text-white">
-
+        <h1 className="mb-2 text-black text-2xl font-bold">visit: <a
+          href="https://tender-trace-h1y818ca0-ss0619963-5893s-projects.vercel.app/"
+          target="_blank"
+          className="bg-red-500 animate-pulse text-white rounded-xl p-3 transition"
+        >
+          Public Dashboard
+        </a></h1>
         <h1 className="text-3xl font-bold mb-4 text-red-500 shadow-amber-500">
           Please read how this works...
         </h1>
