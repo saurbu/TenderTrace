@@ -8,13 +8,8 @@ const router = express.Router();
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // 1. check in TENDERS
     let user = await Tender.findOne({ email, password });
-
     let role = "tender";
-
-    // 2. if not found, check in BILLS
     if (!user) {
       user = await Bill.findOne({ email, password });
       role = "bill";
@@ -25,7 +20,6 @@ router.post("/login", async (req, res) => {
         message: "Invalid email or password"
       });
     }
-
     const token = jwt.sign(
       {
         id: user._id,

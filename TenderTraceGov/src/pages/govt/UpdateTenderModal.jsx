@@ -7,14 +7,12 @@ const stateDistrictMap = {
     "Kurnool","Nellore","Prakasam","Srikakulam","Visakhapatnam",
     "Vizianagaram","West Godavari","YSR Kadapa"
   ],
-
   ArunachalPradesh: [
     "Tawang","West Kameng","East Kameng","Papum Pare","Kurung Kumey",
     "Kra Daadi","Lower Subansiri","Upper Subansiri","West Siang",
     "East Siang","Siang","Upper Siang","Lower Siang","Lower Dibang Valley",
     "Dibang Valley","Anjaw","Lohit","Namsai","Changlang","Tirap","Longding"
   ],
-
   Assam: [
     "Baksa","Barpeta","Biswanath","Bongaigaon","Cachar","Charaideo",
     "Chirang","Darrang","Dhemaji","Dhubri","Dibrugarh","Dima Hasao",
@@ -46,21 +44,17 @@ const stateDistrictMap = {
 }
 
 const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
-
   const [loading, setLoading] = useState(false)
   const [selectedState, setSelectedState] = useState("")
   const [tenderId, setTenderId] = useState("")
 
   if (!isOpen) return null
 
-  // GENERATE TENDER ID
   const handleGenerateId = async () => {
     try {
-
       const res = await fetch(
         "http://localhost:5000/api/tenders/generate-id"
       )
-
       const data = await res.json()
 
       if (res.ok) {
@@ -74,8 +68,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
       alert("Server Error ❌")
     }
   }
-
-  // CREATE TENDER
   const handleSubmit = async (e) => {
 
     e.preventDefault()
@@ -84,11 +76,8 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
       alert("Please generate Tender ID first")
       return
     }
-
     setLoading(true)
-
     const formData = new FormData(e.target)
-
     const payload = {
       id: tenderId,
       tenderName: formData.get("tenderName"),
@@ -98,9 +87,7 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
       timePeriod: Number(formData.get("timePeriod")),
       location: `${formData.get("state")} - ${formData.get("district")}`
     }
-
     try {
-
       const res = await fetch(
         "http://localhost:5000/api/tenders/create",
         {
@@ -126,7 +113,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
         if (onSubmit) {
           onSubmit(result)
         }
-
         onClose()
 
       } else {
@@ -146,19 +132,15 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
 
     }
   }
-
   return (
 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 overflow-y-auto">
 
-      {/* Floating bubbles */}
       <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-400/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
       <div className="absolute top-1/2 left-1/2 w-52 h-52 bg-sky-400/10 rounded-full blur-3xl"></div>
 
       <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden border border-white/40">
-
-        {/* HEADER */}
         <div className="px-5 py-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 text-white flex items-center justify-between">
 
           <div>
@@ -177,10 +159,7 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
           >
             <i className="ri-close-line text-2xl"></i>
           </button>
-
         </div>
-
-        {/* BODY */}
         <div className="max-h-[78vh] overflow-y-auto p-5">
 
           <form
@@ -188,10 +167,7 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
             onSubmit={handleSubmit}
             className="space-y-5"
           >
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-              {/* Tender Name */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Tender Name
@@ -205,8 +181,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                   className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-cyan-400 shadow-sm"
                 />
               </div>
-
-              {/* Company */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Company Name
@@ -220,8 +194,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                   className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-cyan-400 shadow-sm"
                 />
               </div>
-
-              {/* Tender ID */}
               <div className="md:col-span-2 flex gap-3 items-end">
 
                 <div className="flex-1">
@@ -237,7 +209,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                     className="w-full bg-gray-100 border border-gray-200 rounded-2xl px-4 py-3 outline-none font-semibold"
                   />
                 </div>
-
                 <button
                   type="button"
                   onClick={handleGenerateId}
@@ -245,10 +216,7 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                 >
                   Generate
                 </button>
-
               </div>
-
-              {/* Email */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Contractor Email
@@ -262,8 +230,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                   className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-cyan-400 shadow-sm"
                 />
               </div>
-
-              {/* Budget */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Budget (₹)
@@ -277,8 +243,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                   className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 outline-none focus:ring-2 focus:ring-cyan-400 shadow-sm"
                 />
               </div>
-
-              {/* Time */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Time Period (Months)
@@ -293,7 +257,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                 />
               </div>
 
-              {/* State */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   State
@@ -315,8 +278,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
                   ))}
                 </select>
               </div>
-
-              {/* District */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   District
@@ -346,8 +307,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
           </form>
 
         </div>
-
-        {/* FOOTER */}
         <div className="px-5 py-4 bg-gray-50 border-t flex justify-end gap-3">
 
           <button
@@ -356,7 +315,6 @@ const UpdateTenderModal = ({ isOpen, onClose, onSubmit }) => {
           >
             Cancel
           </button>
-
           <button
             type="submit"
             form="tenderForm"

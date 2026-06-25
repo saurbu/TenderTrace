@@ -17,10 +17,6 @@ const Section2 = ({ tenders }) => {
   const navigate = useNavigate()
   const sliderRef = useRef(null)
   const [paused, setPaused] = useState(false)
-
-  /* -----------------------------------
-     CLEAN STATE EXTRACTOR (YOUR FORMAT)
-  ----------------------------------- */
   const getStateName = (location = "") => {
     return location.split('-')[0].trim()
   }
@@ -30,10 +26,6 @@ const Section2 = ({ tenders }) => {
   ].filter(Boolean)
 
   const loopStates = [...states, ...states]
-
-  /* -----------------------------------
-     AUTO SCROLL
-  ----------------------------------- */
   useEffect(() => {
 
     const slider = sliderRef.current
@@ -70,7 +62,6 @@ const Section2 = ({ tenders }) => {
         Active States with Tenders
       </h4>
 
-      {/* MASK */}
       <div className='w-full overflow-hidden'>
 
         <div

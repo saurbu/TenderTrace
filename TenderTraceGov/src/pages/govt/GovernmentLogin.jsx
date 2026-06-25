@@ -1,51 +1,46 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-const GovernmentLogin = () => {
+const GovernmentLogin = ({ embedded = false }) => {
   const navigate = useNavigate()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    navigate('/gov-dashboard')
+    localStorage.setItem("email", email)
+
+    alert("Government Login Success ✅")
+    navigate("/gov-dashboard")
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-100 pt-20">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-[400px]">
-        <h2 className="text-2xl font-bold mb-6 text-center text-blue-900 border-b pb-4">
-          Government Official Login
-        </h2>
+    <form onSubmit={handleSubmit} className="w-full">
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-gray-700 text-sm font-semibold mb-2">Email Address</label>
-            <input
-              type="email"
-              placeholder="Enter Government Email"
-              className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-              required
-            />
-          </div>
+      <h2 className="text-xl font-bold mb-4 text-center text-blue-700">
+        Government Login
+      </h2>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="w-full border p-2 mb-3 rounded"
+        required
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full border p-2 mb-3 rounded"
+        required
+      />
+      <button className="w-full bg-blue-700 text-white py-2 rounded">
+        Login
+      </button>
 
-          <div>
-             <label className="block text-gray-700 text-sm font-semibold mb-2">Password</label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              className="w-full border border-gray-300 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-              required
-            />
-          </div>
-
-          <button 
-            type="submit"
-            className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 mt-4 rounded-lg transition duration-200 shadow-md"
-          >
-            Login to Dashboard
-          </button>
-        </form>
-      </div>
-    </div>
+    </form>
   )
 }
 

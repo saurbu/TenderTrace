@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const stateDistrictMap = {
   AndhraPradesh: [
@@ -70,8 +71,8 @@ const Rightcontenttop = () => {
   const [bills, setBills] = useState([]);
 
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
 
-  // ---------------- FETCH DATA ----------------
   useEffect(() => {
     const fetchData = async () => {
       const [tRes, bRes] = await Promise.all([
@@ -89,7 +90,6 @@ const Rightcontenttop = () => {
     fetchData();
   }, []);
 
-  // ---------------- SEARCH ----------------
   const handleSearch = () => {
     if (!selectedState || !selectedDistrict) {
       alert("Select State & District");
@@ -100,7 +100,6 @@ const Rightcontenttop = () => {
 
   const data = activeTab === "tenders" ? tenders : bills;
 
-  // ---------------- FILTER ----------------
   const filteredData = data.filter((item) => {
     const loc = (item.location || "").toLowerCase();
 
@@ -110,7 +109,6 @@ const Rightcontenttop = () => {
     );
   });
 
-  // ---------------- SLIDER ----------------
   const scrollLeft = () => {
     scrollRef.current?.scrollBy({ left: -380, behavior: "smooth" });
   };
@@ -127,7 +125,6 @@ const Rightcontenttop = () => {
       }}
     >
 
-      {/* HEADER */}
       <div className={`text-center mt-10 transition-all duration-300 ${
         searched ? "opacity-0 h-0 overflow-hidden" : "opacity-100"
       }`}>
@@ -139,11 +136,9 @@ const Rightcontenttop = () => {
         </p>
       </div>
 
-      {/* SEARCH BAR */}
       <div className="flex justify-center mt-6">
         <div className="flex gap-3 bg-white/60 backdrop-blur-md p-3 rounded-2xl shadow-lg">
 
-          {/* STATE */}
           <select
             value={selectedState}
             onChange={(e) => {
@@ -158,7 +153,6 @@ const Rightcontenttop = () => {
             ))}
           </select>
 
-          {/* DISTRICT */}
           <select
             value={selectedDistrict}
             onChange={(e) => setSelectedDistrict(e.target.value)}
@@ -172,7 +166,6 @@ const Rightcontenttop = () => {
               ))}
           </select>
 
-          {/* BUTTON */}
           <button
             onClick={handleSearch}
             className="px-6 py-3 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold"
@@ -182,8 +175,6 @@ const Rightcontenttop = () => {
 
         </div>
       </div>
-
-      {/* TABS */}
       {searched && (
         <div className="flex justify-center gap-4 mt-4">
           <button
@@ -205,12 +196,9 @@ const Rightcontenttop = () => {
           </button>
         </div>
       )}
-
-      {/* SLIDER (2 CARDS VIEW) */}
       {searched && (
         <div className="flex items-center justify-center mt-5 gap-4">
 
-          {/* LEFT */}
           <button
             onClick={scrollLeft}
             className=" w-9 h-20 rounded-sm bg-white/70 backdrop-blur-md shadow-lg mt-10 ml-3"
@@ -218,93 +206,83 @@ const Rightcontenttop = () => {
             ◀
           </button>
 
-          {/* CARDS */}
           <div
-  ref={scrollRef}
-  className="flex gap-5 w-[760px] overflow-hidden scroll-smooth"
->
-  {filteredData.length === 0 ? (
-    <p className="text-white w-full text-center">
-      No results found
-    </p>
-  ) : (
-    filteredData.map((item, index) => (
-      <div
-        key={item._id || item.id || index}
-        className="min-w-[340px] h-[290px] bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 flex flex-col"
-      >
-        <div className="p-3 flex flex-col h-full">
+          ref={scrollRef}
+          className="flex gap-5 w-[760px] overflow-hidden scroll-smooth"
+        >
+          {filteredData.length === 0 ? (
+            <p className="text-white w-full text-center">
+              No results found
+            </p>
+          ) : (
+            filteredData.map((item, index) => (
+              <div
+                key={item._id || item.id || index}
+                className="min-w-[340px] h-[290px] bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 flex flex-col"
+              >
+                <div className="p-3 flex flex-col h-full">
 
-          {/* TOP */}
-          <div className="flex justify-between items-center mb-1">
+                  <div className="flex justify-between items-center mb-1">
 
-            <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
-              {item.id || item._id || "N/A"}
-            </span>
+                    <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                      {item.id || item._id || "N/A"}
+                    </span>
 
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-              {item.status || "Active"}
-            </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">
+                      {item.status || "Active"}
+                    </span>
 
-          </div>
+                  </div>
 
-          {/* TITLE */}
-          <h3 className="text-sm font-bold text-gray-900 mb-1 line-clamp-1">
-            {item.tenderName || item.billTitle}
-          </h3>
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 line-clamp-1">
+                    {item.tenderName || item.billTitle}
+                  </h3>
 
-          {/* COMPANY (compact but visible) */}
-          <p className="text-[11px] text-blue-600 mb-1 font-semibold line-clamp-1">
-            {item.companyName || item.department || "N/A"}
-          </p>
+                  <p className="text-[11px] text-blue-600 mb-1 font-semibold line-clamp-1">
+                    {item.companyName || item.department || "N/A"}
+                  </p>
 
-          {/* SPECIFICATION (compact 2 lines only) */}
-          <p className="text-[10px] text-gray-600 mb-2 line-clamp-2 leading-snug">
-            {item.description ||
-              item.specification ||
-              "Specification not available. Click view details for more information."}
-          </p>
+                  <p className="text-[10px] text-gray-600 mb-2 line-clamp-2 leading-snug">
+                    {item.description ||
+                      item.specification ||
+                      "Specification not available. Click view details for more information."}
+                  </p>
 
-          {/* INFO GRID (tight) */}
-          <div className="bg-gray-50 p-2 rounded-lg border border-gray-100 mb-2 text-[11px]">
+                  <div className="bg-gray-50 p-2 rounded-lg border border-gray-100 mb-2 text-[11px]">
 
-            <div className="flex justify-between">
-              <span className="text-gray-500">Budget</span>
-              <span className="font-bold">₹{item.budget || 0}</span>
-            </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Budget</span>
+                      <span className="font-bold">₹{item.budget || 0}</span>
+                    </div>
 
-            <div className="flex justify-between">
-              <span className="text-gray-500">Location</span>
-              <span className="text-gray-700 font-semibold">
-                {item.location || "N/A"}
-              </span>
-            </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Location</span>
+                      <span className="text-gray-700 font-semibold">
+                        {item.location || "N/A"}
+                      </span>
+                    </div>
 
-          </div>
+                  </div>
+                  <div className="mt-auto flex gap-2">
 
-          {/* BUTTONS */}
-          <div className="mt-auto flex gap-2">
+              
 
-            <button
-              className="flex-1 text-[11px] py-1.5 rounded-lg bg-red-100 text-red-600 font-semibold hover:bg-red-200 transition"
-            >
-              Report
-            </button>
+                    <button
+                      onClick={() =>
+                        navigate(`/projects/${item.id || item._id}`)
+                      }
+                      className="flex-1 text-[11px] py-1.5 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+                    >
+                      View Details
+                    </button>
 
-            <button
-              className="flex-1 text-[11px] py-1.5 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
-            >
-              View Details
-            </button>
+                  </div>
 
-          </div>
-
+                </div>
+              </div>
+            ))
+          )}
         </div>
-      </div>
-    ))
-  )}
-</div>
-          {/* RIGHT */}
           <button
             onClick={scrollRight}
             className="w-9 h-20 rounded-sm bg-white/70 backdrop-blur-md shadow-lg mt-10 mr-3"

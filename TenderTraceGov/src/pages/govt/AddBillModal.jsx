@@ -6,78 +6,45 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
   const [billId, setBillId] = useState("")
 
   if (!isOpen) return null
-
-  // GENERATE BILL ID
   const handleGenerateId = async () => {
-
     try {
-
       const res = await fetch(
         "http://localhost:5000/api/bills/generate-id"
       )
-
       const data = await res.json()
-
       if (res.ok) {
-
         setBillId(data.billId)
-
       } else {
-
         alert("Failed to generate Bill ID ❌")
-
       }
-
     } catch (error) {
-
       console.log(error)
       alert("Server Error ❌")
-
     }
   }
-
-  // CREATE BILL
   const handleSubmit = async (e) => {
-
     e.preventDefault()
-
     if (!billId) {
       alert("Please generate Bill ID first ❗")
       return
     }
-
     setLoading(true)
-
-    const formData = new FormData(e.target)
-
+    const form = document.getElementById("billForm");
+    const formData = new FormData(form); 
     const payload = {
-
   id: billId,
-
   billTitle: formData.get("billTitle"),
-
   department: formData.get("department"),
-
   status: formData.get("status"),
-
   location: formData.get("location"),
-
   wardNo: formData.get("wardNo"),
-
   targetDate: formData.get("targetDate"),
-
   budget: Number(formData.get("budget")),
-
   timePeriod: 12,
-
   summary: formData.get("summary"),
-
   email: formData.get("email")
-
 }
-
     try {
-
       const res = await fetch(
         "http://localhost:5000/api/bills/create",
         {
@@ -88,54 +55,40 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
           body: JSON.stringify(payload)
         }
       )
-
       const result = await res.json()
 
       if (res.ok) {
-
         alert(
           `✅ Bill Created Successfully\n\n` +
           `Bill ID: ${result.billId}\n` +
           `Password: ${result.password}\n` +
           `PIN: ${result.pin}`
         )
-
         if (onSubmit) {
           onSubmit(result)
         }
-
         onClose()
-
       } else {
-
         alert(result.message || result.error || "Something went wrong ❌")
-
       }
-
     } catch (error) {
-
       console.log(error)
       alert("Server Error ❌")
-
     } finally {
-
       setLoading(false)
 
     }
   }
-
   return (
 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-3 overflow-y-auto">
 
-      {/* Bubble Background */}
       <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-400/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl"></div>
       <div className="absolute top-1/2 left-1/2 w-52 h-52 bg-sky-400/10 rounded-full blur-3xl"></div>
 
       <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden border border-white/40">
 
-        {/* HEADER */}
         <div className="px-5 py-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 text-white flex items-center justify-between">
 
           <div>
@@ -157,7 +110,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
 
         </div>
 
-        {/* BODY */}
         <div className="max-h-[78vh] overflow-y-auto p-5">
 
           <form
@@ -168,7 +120,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-              {/* Bill Title */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Bill Title
@@ -183,7 +134,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 />
               </div>
 
-              {/* Department */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Department
@@ -202,7 +152,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 </select>
               </div>
 
-              {/* Status */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Status
@@ -220,7 +169,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 </select>
               </div>
 
-              {/* Bill ID */}
               <div className="md:col-span-2 flex gap-3 items-end">
 
                 <div className="flex-1">
@@ -249,7 +197,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
 
               </div>
 
-              {/* Email */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Official Email
@@ -264,7 +211,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 />
               </div>
 
-              {/* Budget */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Budget (₹)
@@ -279,7 +225,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 />
               </div>
 
-              {/* Location */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Location
@@ -294,7 +239,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 />
               </div>
 
-              {/* Ward */}
               <div>
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Ward No
@@ -309,7 +253,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 />
               </div>
 
-              {/* Target Date */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Target Date
@@ -323,7 +266,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
                 />
               </div>
 
-              {/* Summary */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-semibold mb-1 text-gray-700">
                   Bill Summary
@@ -344,7 +286,6 @@ const AddBillModal = ({ isOpen, onClose, onSubmit }) => {
 
         </div>
 
-        {/* FOOTER */}
         <div className="px-5 py-4 bg-gray-50 border-t flex justify-end gap-3">
 
           <button

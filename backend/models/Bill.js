@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 
 const billSchema = new mongoose.Schema(
   {
-    // ✅ BILL ID
     id: {
       type: String,
       required: true,
@@ -79,26 +78,24 @@ const billSchema = new mongoose.Schema(
   }
 );
 
-// ✅ AUTO HASH PASSWORD
-billSchema.pre("save", async function (next) {
+billSchema.pre("save", async function () {
+
+  if (!this.isModified("password")) {
+    return;
+  }
 
   try {
 
-    if (!this.isModified("password")) {
-      return next();
-    }
-
     const salt = await bcrypt.genSalt(10);
 
-    this.password =
-      await bcrypt.hash(this.password, salt);
-
-    next();
+    this.password = await bcrypt.hash(
+      this.password,
+      salt
+    );
 
   } catch (error) {
-
-    next(error);
-
+    console.log(error);
+    throw error;
   }
 
 });

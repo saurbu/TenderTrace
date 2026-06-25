@@ -1,39 +1,23 @@
 import express from "express";
 
 import {
-
   generateBillId,
-
   createBill,
-
   getAllBills,
-
-  loginBillUser
-
+  loginBillUser,
+  getBillById
 } from "../controllers/billController.js";
 
 const router = express.Router();
 
-/* GENERATE ID */
-router.get(
-  "/generate-id",
-  generateBillId
-);
+router.get("/generate-id", generateBillId);
 
-/* CREATE BILL */
-router.post(
-  "/create",
-  createBill
-);
+router.post("/create", createBill);
 
-/* GET ALL */
-router.get(
-  "/all",
-  getAllBills
-);
-/* LOGIN */
-router.post(
-  "/login",
-  loginBillUser
-);
+router.get("/all", getAllBills);
+
+router.post("/login", loginBillUser);
+
+router.get("/:id", getBillById);
+
 export default router;

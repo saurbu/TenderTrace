@@ -5,7 +5,6 @@ const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, "uploads/materials/");
   },
-
   filename(req, file, cb) {
     cb(
       null,
@@ -16,7 +15,6 @@ const storage = multer.diskStorage({
     );
   },
 });
-
 const upload = multer({
   storage,
 });

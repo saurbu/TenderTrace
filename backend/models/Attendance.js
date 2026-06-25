@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-
+import mongoose from 'mongoose'
 const AttendanceSchema = new mongoose.Schema(
   {
     tenderId: {
@@ -91,5 +90,6 @@ AttendanceSchema.index(
     unique: true,
   }
 );
+const Attendance = mongoose.model("Attendance", AttendanceSchema);
 
-module.exports = mongoose.model("Attendance", AttendanceSchema);
+export default Attendance 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const UploadDetailsModal = ({ isOpen, onClose, onSubmit, projects }) => {
-  const [faceScanStatus, setFaceScanStatus] = useState('idle'); // idle, scanning, success
+  const [faceScanStatus, setFaceScanStatus] = useState('idle'); 
 
   if (!isOpen) return null;
 
@@ -35,9 +35,7 @@ const UploadDetailsModal = ({ isOpen, onClose, onSubmit, projects }) => {
         <div className="p-6 overflow-y-auto">
           <form id="uploadForm" onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              
-              {/* Project Selection */}
-              <div className="col-span-1 md:col-span-2">
+                            <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Select Active Project</label>
                 <select name="projectId" required className="w-full border border-gray-300 rounded-md px-4 py-2.5 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white transition-shadow">
                   <option value="">-- Choose Project --</option>
@@ -47,37 +45,31 @@ const UploadDetailsModal = ({ isOpen, onClose, onSubmit, projects }) => {
                 </select>
               </div>
 
-              {/* Name of Employee */}
               <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Name of Employee</label>
                 <input type="text" name="employeeName" required className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. Ramesh Kumar" />
               </div>
 
-              {/* Aadhaar No */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Aadhaar / ID No.</label>
                 <input type="text" name="aadhaarNo" required pattern="[0-9]{12}" title="Must be a 12 digit Aadhaar number" className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. 1234 5678 9012" />
               </div>
 
-              {/* Mobile No */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Mobile No.</label>
                 <input type="tel" name="mobileNo" required pattern="[0-9]{10}" title="Must be a 10 digit number" className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. 9876543210" />
               </div>
 
-              {/* Position */}
               <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Position of Employee</label>
                 <input type="text" name="position" required className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none" placeholder="e.g. Site Supervisor, Laborer, Engineer" />
               </div>
 
-              {/* Address */}
               <div className="col-span-1 md:col-span-2">
                 <label className="block text-sm font-semibold text-gray-700 mb-1">Address</label>
                 <textarea name="address" required rows="2" className="w-full border border-gray-300 rounded-md px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none resize-none" placeholder="Complete residential address..." />
               </div>
 
-              {/* Add Picture Section */}
               <div className="col-span-1 md:col-span-2 mt-4">
                 <div className="border border-dashed border-gray-300 bg-gray-50 rounded-lg p-5 text-center transition-all duration-300">
                   <h3 className="font-semibold text-gray-800 mb-2 flex justify-center items-center">

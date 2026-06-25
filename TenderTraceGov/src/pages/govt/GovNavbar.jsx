@@ -5,8 +5,6 @@ const GovNavbar = ({ onOpenModal, onOpenBillModal }) => {
   const navigate = useNavigate()
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const dropdownRef = useRef(null)
-
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -43,8 +41,6 @@ const GovNavbar = ({ onOpenModal, onOpenBillModal }) => {
             >
               <i className="ri-add-line mr-2"></i> Update Tender
             </button>
-
-            {/* Profile Dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button 
                 onClick={() => setIsProfileOpen(!isProfileOpen)}

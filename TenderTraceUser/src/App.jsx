@@ -8,8 +8,8 @@ import Footer from './components/footer/Footer'
 import Navbar from './components/Navbar'
 import About from './components/about/About'
 import StateTenders from './components/state/StateTenders'
+import ProjectDetails from "./pages/ProjectDetails";
 
-// ✅ Home Page (DATA LAYER HERE)
 const Home = () => {
 
   const [tenders, setTenders] = React.useState([])
@@ -50,7 +50,6 @@ const Home = () => {
     <>
       <Section1 />
 
-      {/* 🚀 PASS REAL DATA TO BOTH SECTIONS */}
       <Section2 tenders={tenders} />
 
       <Section3
@@ -62,7 +61,6 @@ const Home = () => {
   )
 }
 
-// ✅ MAIN APP
 const App = () => {
   return (
     <Router>
@@ -73,6 +71,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/state/:stateName" element={<StateTenders />} />
+        <Route path="/projects/:id" element={<ProjectDetails />}
+/>
       </Routes>
 
       <Footer />
