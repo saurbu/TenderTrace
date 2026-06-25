@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+
 import dotenv from "dotenv";
 import path from "path";
 
@@ -19,11 +20,13 @@ connectDB();
 const app = express();
 
 
+
 app.use(cors({
   origin: [
-    "http://localhost:5173",
     "http://localhost:5174",
-    "http://localhost:3000"
+    "http://localhost:5173",
+    "https://tender-trace-h1y818ca0-ss0619963-5893s-projects.vercel.app",
+    "https://tender-trace.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
