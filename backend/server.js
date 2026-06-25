@@ -21,14 +21,15 @@ const app = express();
 
 
 
+import cors from "cors";
+
 app.use(cors({
   origin: [
-    "http://localhost:5174",
     "http://localhost:5173",
-    "https://tender-trace-h1y818ca0-ss0619963-5893s-projects.vercel.app",
-    "https://tender-trace.vercel.app"
+    "http://localhost:5174",
+    "https://tender-trace.vercel.app",
+    "https://tender-trace-*.vercel.app"
   ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
