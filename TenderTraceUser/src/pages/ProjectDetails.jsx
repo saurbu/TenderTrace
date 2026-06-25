@@ -56,7 +56,6 @@ const ProjectDetails = () => {
       setDailyReport(result.data.dailyReport);
       setAttendance(result.data.attendance);
     } else {
-      // 🔥 fallback: try bill API if tender fails
       console.log("Project:", project);
 
       console.log("itemId:",
