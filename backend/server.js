@@ -19,13 +19,21 @@ connectDB();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://tender-trace.vercel.app",
+  "https://tender-trace-5uxb-lxr1i4nh3-ss0619963-5893s-projects.vercel.app"
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "https://tender-trace.vercel.app",
-    "https://tender-trace-*.vercel.app"
-  ],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(null, true); // TEMP FIX (allow all Vercel previews)
+  },
   credentials: true
 }));
 
